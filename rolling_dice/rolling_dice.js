@@ -5,11 +5,6 @@ var game = new Phaser.Game(600, 400, Phaser.AUTO, "", {preload:preload, create:c
 //  The Google WebFont Loader will look for this object, so create it before loading the script.
 WebFontConfig = {
 
-    //  'active' means all requested fonts have finished loading
-    //  We set a 1 second delay before calling 'createText'.
-    //  For some reason if we don't the browser cannot render the text the first time it's created.
-    active: function() { game.time.events.add(Phaser.Timer.SECOND, createText, this); },
-
     //  The Google Fonts we want to load (specify as many as you like in the array)
     google: {
       families: ['Roboto Slab']
@@ -23,10 +18,18 @@ function preload() {
     // credit to Kenney.nl
     // Blur scripts taken from example Filters -> Blur
     // credit to Mat Groves, matgroves.com
+    
+    var path;
+    if (typeof window.path === "undefined") {
+        path = "";
+    }
+    else {
+        path = window.path;
+    }
 
-    game.load.spritesheet("dice", "assets/diceRed.png", 64, 64);
-    game.load.script("BlurX", "assets/BlurX.js");
-    game.load.script("BlurY", "assets/BlurY.js");
+    game.load.spritesheet("dice", path + "assets/diceRed.png", 64, 64);
+    game.load.script("BlurX", path + "assets/BlurX.js");
+    game.load.script("BlurY", path + "assets/BlurY.js");
     game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 }
 

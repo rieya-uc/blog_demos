@@ -1,4 +1,4 @@
-var game = new Phaser.Game(600, 400, Phaser.AUTO, "", {preload:preload, create:create, update:update});
+var game = new Phaser.Game(600, 400, Phaser.AUTO, "demo", {preload:preload, create:create, update:update});
 
 // WebFont code taken from example Text -> Google Webfonts
 
@@ -26,6 +26,10 @@ function preload() {
     else {
         path = window.path;
     }
+
+    // centre the canvas
+    game.scale.pageAlignHorizontally = true;
+    game.scale.refresh();
 
     game.load.spritesheet("dice", path + "assets/diceRed.png", 64, 64);
     game.load.script("BlurX", path + "assets/BlurX.js");

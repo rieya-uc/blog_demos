@@ -28,8 +28,8 @@ function preload() {
     }
 
     // centre the canvas
-    game.scale.pageAlignHorizontally = true;
-    game.scale.refresh();
+    // game.scale.pageAlignHorizontally = true;
+    // game.scale.refresh();
 
     game.load.spritesheet("dice", path + "assets/diceRed.png", 64, 64);
     game.load.script("BlurX", path + "assets/BlurX.js");

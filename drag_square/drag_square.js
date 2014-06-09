@@ -25,49 +25,26 @@ function preload() {
     else {
         path = window.path;
     }
-
-    game.load.spritesheet("pixels", path+"assets/pixels.png", 4, 4);
+    game.load.atlas("pixels", path+"assets/pixels.png", path+"assets/pixels.json");
 }
 
+var s2, square;
 var p1, p2, p3, p4;
 
 function create() {
-    //game.stage.backgroundColor = '#DDDDDD';
-    
-    /*
-    var p2 = game.add.sprite(100,100, "pixels");
-    p2.frame = 10;
-    p2.width = 50;
-    p2.height = 50;
-    */
     game.stage.smoothing = false; 
-    var j = 0;
-    var k = 0;
-    for (var i = 0; i < 21; i++) {
-        if (i % 7 === 0) {
-            j++;
-            k = 0;
-                
-        }
-        var p1 = game.add.sprite(100+(k*5), 100+(j*5), "pixels");
-        p1.frame = i;
-    
-        //p1.width = 40;
-        //p1.height = 40;
-        k++;
-    }
+    square = new Square(game, 0, 0,  9, 10, 100, 100);
+    s2 = new Square(game, 0, 100, 0, 0, 100, 100);
 
-    var p2 = game.add.sprite(100,200,"pixels");
-    p2.frame = 10;
-    p2.width = 100;
-
-    var p3 = game.add.sprite(50,100,"pixels");
-    p3.frame = 9;
-    p3.height = 100;
-    p3.width = 10;
-    
 }
 
 function update() {
+}
 
+function render() {
+    /*
+    game.debug.spriteBounds(s2.body);
+    game.debug.spriteCorners(s2.body, true, true);
+    game.debug.spriteInfo(s2.body,32,32);
+    */
 }

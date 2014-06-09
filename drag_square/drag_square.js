@@ -28,23 +28,11 @@ function preload() {
     game.load.atlas("pixels", path+"assets/pixels.png", path+"assets/pixels.json");
 }
 
-var s2, square;
-var p1, p2, p3, p4;
-
 function create() {
-    game.stage.smoothing = false; 
-    square = new Square(game, 0, 0,  9, 10, 100, 100);
-    s2 = new Square(game, 0, 100, 0, 0, 100, 100);
-
+    //var i;
+    //for (i=0; i < 15; i++) {
+        
 }
 
 function update() {
-}
-
-function render() {
-    /*
-    game.debug.spriteBounds(s2.body);
-    game.debug.spriteCorners(s2.body, true, true);
-    game.debug.spriteInfo(s2.body,32,32);
-    */
 }

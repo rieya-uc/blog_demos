@@ -31,7 +31,7 @@ Square = function (game, x, y, bodyColourIndex, borderColourIndex, width, height
     this.bottomBorder.height = this.bsize;
     
     this.body.inputEnabled = true;
-    this.body.input.enableDrag(true);
+    this.body.input.enableDrag();
 
     this.body.events.onDragStop.add(function() {
         this.moveTo(this.body.position);  

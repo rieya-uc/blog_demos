@@ -18,18 +18,21 @@ function preload() {
     game.load.image("circle", path+"assets/dashed_circle.png");
 
 
-    // hide the cursor when it's over the game
+    // hide the target when it's over the game
     game.canvas.onmouseover = function() {
-        game.canvas.style.cursor = "none";
+        game.canvas.style.target = "none";
     }
     game.canvas.onmouseout = function() {
-        game.canvas.style.cursor = "default";
+        game.canvas.style.target = "default";
     }
 }
 
-var ninja, dcircle;
+var ninja, dest, target, perimeter;
 
 function create() {
+
+    game.time.deltaCap = 1/60;
+
     ninja = game.add.sprite(100,100,"ninja");
     ninja.scale.setTo(0.5, 0.5);
     ninja.anchor.setTo(0.5, 0.5);
@@ -37,32 +40,68 @@ function create() {
     // enable physics on our player
     game.physics.enable(ninja, Phaser.Physics.ARCADE);
     ninja.body.allowRotation = false;
-    dcircle = game.add.sprite(150, 150, "circle");
-    dcircle.scale.setTo(0.5, 0.5);
-    dcircle.anchor.setTo(0.5, 0.5);
+
+    // where the ninja is moving to
+    dest = game.add.sprite(150, 150, "circle");
+    dest.scale.setTo(0.4, 0.4);
+    dest.anchor.setTo(0.5, 0.5);
+    dest.position = game.input.position;
+
+    // mouse target
+    target = game.add.sprite(0,0, "circle");
+    target.scale.setTo(0.2, 0.2);
+    target.anchor.setTo(0.5, 0.5);
+    //target.position = game.input.position;
+
+    // test circle, mouse boundaries
+    //perimeter = game.add.sprite(200,200,"circle");
+    //perimeter.scale.setTo(1,1);
+    //perimeter.anchor.setTo(0.5, 0.5);
+
     game.stage.backgroundColor = '#DDDDDD';
 
     
 }
-
+var rotation = 0;
 function update() {
+    var r = 60;
 
-    dcircle.position = game.input.position;
-    ninja.rotation = game.physics.arcade.moveToPointer(ninja, 400, game.activePointer,50);
+    if (game.input.activePointer.circle.contains(ninja.x, ninja.y)) {
+        ninja.body.velocity.setTo(0,0);
+        // snap ninja's centre to mouse position,
+        // compare how position is set here to how target.position
+        // is set in create()
+        ninja.position.x = game.input.position.x;
+        ninja.position.y = game.input.position.y;
 
-
-     /*
-
-
-    //  if it's overlapping the mouse, don't move any more
-    if (Phaser.Rectangle.contains(ninja.body, game.input.x, game.input.y)) {
-        ninja.body.velocity.setTo(0, 0);
+        /*
+        if (game.physics.arcade.distanceToPointer(target) > r) {
+            rotation = game.physics.arcade.angleToPointer(target);
+            target.position.x = ninja.position.x - r*Math.cos(rotation);
+            target.position.y = ninja.position.y - r*Math.sin(rotation);
+        }
+        */
+    }
+    else {
+        rotation = game.physics.arcade.moveToPointer(ninja, 800);
+        /*
+        target.position.x = ninja.position.x - r*Math.cos(rotation);
+        target.position.y = ninja.position.y - r*Math.sin(rotation);
+        */
 
     }
-    */
+
+    if (game.physics.arcade.distanceToPointer(target) > r) {
+        rotation = game.physics.arcade.angleToPointer(target);
+        target.position.x = ninja.position.x - r*Math.cos(rotation);
+        target.position.y = ninja.position.y - r*Math.sin(rotation);
+    }
+    //target.position.x = ninja.position.x;
+    //target.position.y = ninja.position.y - d;
+    //console.log(game.physics.arcade.angleToPointer(ninja));
 }
 
 function render() {
-    game.debug.body(ninja);
-    game.debug.body(dcircle);
+    //game.debug.body(ninja);
+    //game.debug.body(dest);
 }

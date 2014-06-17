@@ -16,19 +16,19 @@ function preload() {
 
     game.load.image("ninja", path+"assets/chars/ninja.png");
     game.load.image("circle", path+"assets/dashed_circle.png");
-
-
-    // hide the target when it's over the game
+    game.load.image("bullet", path+"assets/chars/shuriken.png");
+    
+    // hide the mouse cursor when it's over the game
     game.canvas.onmouseover = function() {
-        game.canvas.style.target = "none";
+       // game.canvas.style.cursor = "none";
     }
     game.canvas.onmouseout = function() {
-        game.canvas.style.target = "default";
+       // game.canvas.style.cursor = "default";
     }
 }
 
-var ninja, dest, target, perimeter;
-
+var ninja, dest, target, bullets, bulletTime, fireSpeed;
+var testb;
 function create() {
 
     game.time.deltaCap = 1/60;
@@ -47,20 +47,36 @@ function create() {
     dest.anchor.setTo(0.5, 0.5);
     dest.position = game.input.position;
 
-    // mouse target
+    // firing target
     target = game.add.sprite(0,0, "circle");
     target.scale.setTo(0.2, 0.2);
     target.anchor.setTo(0.5, 0.5);
-    //target.position = game.input.position;
 
-    // test circle, mouse boundaries
-    //perimeter = game.add.sprite(200,200,"circle");
-    //perimeter.scale.setTo(1,1);
-    //perimeter.anchor.setTo(0.5, 0.5);
+    // bullets
+    bullets = game.add.group();
+    bullets.enableBody = true;
+    bullets.physicsBodyType = Phaser.Physics.ARCADE;
+
+    bullets.createMultiple(30, "bullet");
+    bullets.setAll("scale.x", 0.5);
+    bullets.setAll("scale.y", 0.5);
+    bullets.setAll("anchor.x", 0.5);
+    bullets.setAll("anchor.y", 0.5);
+    bullets.setAll("outOfBoundsKill", true);
+    bullets.setAll("checkWorldBounds", true);
+
+    fireSpeed = 100;
+    bulletTime = game.time.now + fireSpeed;
+
+    testb = game.add.sprite(200,200, "bullet");
+    game.physics.enable(testb, Phaser.Physics.ARCADE);
+    testb.anchor.setTo(0.5, 0.5);
+    testb.scale.setTo(0.5, 0.5);
+    testb.body.setSize(33,33,-1,0);
+
 
     game.stage.backgroundColor = '#DDDDDD';
 
-    
 }
 var rotation = 0;
 function update() {
@@ -73,22 +89,12 @@ function update() {
         // is set in create()
         ninja.position.x = game.input.position.x;
         ninja.position.y = game.input.position.y;
-
-        /*
-        if (game.physics.arcade.distanceToPointer(target) > r) {
-            rotation = game.physics.arcade.angleToPointer(target);
-            target.position.x = ninja.position.x - r*Math.cos(rotation);
-            target.position.y = ninja.position.y - r*Math.sin(rotation);
-        }
-        */
     }
+    //else if (!game.input.mousePointer.isDown){
+    //    rotation = game.physics.arcade.moveToPointer(ninja, 800);
+    //}
     else {
-        rotation = game.physics.arcade.moveToPointer(ninja, 800);
-        /*
-        target.position.x = ninja.position.x - r*Math.cos(rotation);
-        target.position.y = ninja.position.y - r*Math.sin(rotation);
-        */
-
+         rotation = game.physics.arcade.moveToPointer(ninja, 800);
     }
 
     if (game.physics.arcade.distanceToPointer(target) > r) {
@@ -96,12 +102,21 @@ function update() {
         target.position.x = ninja.position.x - r*Math.cos(rotation);
         target.position.y = ninja.position.y - r*Math.sin(rotation);
     }
-    //target.position.x = ninja.position.x;
-    //target.position.y = ninja.position.y - d;
-    //console.log(game.physics.arcade.angleToPointer(ninja));
+
+    if (game.time.now > bulletTime) {
+        fire();
+    }
+}
+
+function fire() {
+
+    var b = bullets.getFirstExists(false);
+    b.reset(ninja.position.x, ninja.position.y);
+    b.body.setSize(33,33,-1,0);
+    game.physics.arcade.moveToObject(b, target, 500);
+    bulletTime = game.time.now + fireSpeed;
 }
 
 function render() {
-    //game.debug.body(ninja);
-    //game.debug.body(dest);
+    game.debug.body(testb);    
 }

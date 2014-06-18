@@ -29,6 +29,11 @@ function preload() {
 
 var ninja, dest, target, bullets, bulletTime, fireSpeed;
 var testb;
+var rotation = 0;
+var dist = 0;
+var monsters;
+
+
 function create() {
 
     game.time.deltaCap = 1/60;
@@ -68,17 +73,25 @@ function create() {
     fireSpeed = 100;
     bulletTime = game.time.now + fireSpeed;
 
+    /*
     testb = game.add.sprite(200,200, "bullet");
     game.physics.enable(testb, Phaser.Physics.ARCADE);
     testb.anchor.setTo(0.5, 0.5);
     testb.scale.setTo(0.5, 0.5);
     testb.body.setSize(33,33,-1,0);
+    */
 
+    game.input.onDown.add(
+        function() {
+            rotation = game.physics.arcade.angleBetween(target, ninja);
+            dist = game.physics.arcade.distanceBetween(target, ninja);
+            dist = (dist > 60) ? 60 : dist;
+        });
 
     game.stage.backgroundColor = '#DDDDDD';
 
 }
-var rotation = 0;
+
 function update() {
     var r = 60;
 
@@ -90,18 +103,20 @@ function update() {
         ninja.position.x = game.input.position.x;
         ninja.position.y = game.input.position.y;
     }
-    //else if (!game.input.mousePointer.isDown){
-    //    rotation = game.physics.arcade.moveToPointer(ninja, 800);
-    //}
     else {
-         rotation = game.physics.arcade.moveToPointer(ninja, 800);
+        game.physics.arcade.moveToPointer(ninja, 800);
     }
 
-    if (game.physics.arcade.distanceToPointer(target) > r) {
+    if (game.input.mousePointer.isDown) {
+        target.position.x = ninja.position.x - dist*Math.cos(rotation);
+        target.position.y = ninja.position.y - dist*Math.sin(rotation);
+    }
+    else if (game.physics.arcade.distanceToPointer(target) > r) {
         rotation = game.physics.arcade.angleToPointer(target);
         target.position.x = ninja.position.x - r*Math.cos(rotation);
         target.position.y = ninja.position.y - r*Math.sin(rotation);
     }
+    
 
     if (game.time.now > bulletTime) {
         fire();
@@ -118,5 +133,5 @@ function fire() {
 }
 
 function render() {
-    game.debug.body(testb);    
+    //game.debug.body(testb);    
 }

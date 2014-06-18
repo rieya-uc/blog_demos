@@ -17,6 +17,7 @@ function preload() {
     game.load.image("ninja", path+"assets/chars/ninja.png");
     game.load.image("circle", path+"assets/dashed_circle.png");
     game.load.image("bullet", path+"assets/chars/shuriken.png");
+    game.load.image("monster", path+"assets/chars/blue_monster.png");
     
     // hide the mouse cursor when it's over the game
     game.canvas.onmouseover = function() {
@@ -31,7 +32,7 @@ var ninja, dest, target, bullets, bulletTime, fireSpeed;
 var testb;
 var rotation = 0;
 var dist = 0;
-var monsters;
+var monsters, monster, monsterTime;
 
 
 function create() {
@@ -88,6 +89,16 @@ function create() {
             dist = (dist > 60) ? 60 : dist;
         });
 
+    // monsters
+    monster = game.add.sprite(200,200, "monster");
+    game.physics.enable(monster, Phaser.Physics.ARCADE);
+    monster.anchor.setTo(0.5, 0.5);
+    monster.scale.setTo(0.3, 0.3);
+    monster.body.setSize(90, 98, 0, 0);
+    monster.health = 100;
+    monsterTime = game.time.now
+    //monsters = game.add.group();
+    
     game.stage.backgroundColor = '#DDDDDD';
 
 }
@@ -121,17 +132,38 @@ function update() {
     if (game.time.now > bulletTime) {
         fire();
     }
+
+    if (game.time.now > monsterTime) {
+        var m = game.add.sprite(200,200, "monster");
+        game.physics.enable(m, Phaser.Physics.ARCADE);
+        m.anchor.setTo(0.5, 0.5);
+        m.scale.setTo(0.3, 0.3);
+        m.body.setSize(90, 98, 0, 0);
+        m.health = 100;
+        game.physics.arcade.moveToObject(m, ninja, 100);
+        monsterTime = game.time.now + 500;
+    }
+
+    game.physics.arcade.moveToObject(monster, ninja, 100);
+    game.physics.arcade.collide(monster, bullets, monsterHit, null, this);
+}
+
+function monsterHit(monster, bullet) {
+    monster.damage(5);
+    bullet.kill();
 }
 
 function fire() {
 
     var b = bullets.getFirstExists(false);
-    b.reset(ninja.position.x, ninja.position.y);
-    b.body.setSize(33,33,-1,0);
-    game.physics.arcade.moveToObject(b, target, 500);
+    if (b !== null) {
+        b.reset(ninja.position.x, ninja.position.y);
+        b.body.setSize(33,33,-1,0);
+        game.physics.arcade.moveToObject(b, target, 500);
+    }
     bulletTime = game.time.now + fireSpeed;
 }
 
 function render() {
-    //game.debug.body(testb);    
+    //game.debug.body(monster);    
 }

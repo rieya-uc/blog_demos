@@ -38,17 +38,17 @@ ArenaShooter.Game = function (game) {
     this.fireSpeed;    // how fast player can shoot bullets
  
     this.monsters;     // monster group
+    /*
     this.monster;
     this.monsterTime;  // time to release another monster? 
     this.monsterSpeed; // how fast monsters are spawned
+    */
+
 };
 
 ArenaShooter.Game.prototype = {
     
     create: function () {
-        //this.game.canvas.style.cursor = "none";
-        
-
         
         // hide the mouse cursor when it's over the game
         this.game.canvas.onmouseover = function(e) {
@@ -102,6 +102,7 @@ ArenaShooter.Game.prototype = {
                 this.dist = (this.dist > 60) ? 60 : this.dist;
             }, this);
         
+        /*
         // monsters
         this.monster = this.add.sprite(200,200, "monster");
         this.physics.enable(this.monster, Phaser.Physics.ARCADE);
@@ -111,7 +112,10 @@ ArenaShooter.Game.prototype = {
         this.monster.health = 100;
         this.monsterTime = this.time.now;
         //monsters = game.add.group();
-        
+        */
+
+        this.monsters = new MonsterSpawner(this);
+
         this.stage.backgroundColor = '#DDDDDD';
     },
     
@@ -145,30 +149,11 @@ ArenaShooter.Game.prototype = {
             this.fire();
         }
 
-        if (this.time.now > this.monsterTime) {
-            var m = this.add.sprite(200,200, "monster");
-            this.physics.enable(m, Phaser.Physics.ARCADE);
-            m.anchor.setTo(0.5, 0.5);
-            m.scale.setTo(0.3, 0.3);
-            m.body.setSize(90, 98, 0, 0);
-            m.health = 100;
-            this.physics.arcade.moveToObject(m, this.ninja, 100);
-            this.monsterTime = this.time.now + 500;
-        }
-
-        this.physics.arcade.moveToObject(this.monster, this.ninja, 100);
-        this.physics.arcade.collide(this.monster, this.bullets, this.monsterHit, null, this);       
+        this.monsters.moveTo(this.ninja.position.x, this.ninja.position.y);
+        this.physics.arcade.collide(this.monsters, this.bullets, this.monsters.monsterHit, null, this);       
     },
     
-    quitGame: function (pointer) {
-        
-        
-    },
 
-    monsterHit: function(monster, bullet) {
-        monster.damage(5);
-        bullet.kill();
-    },
 
     fire: function() {
         var b = this.bullets.getFirstExists(false);
@@ -178,6 +163,11 @@ ArenaShooter.Game.prototype = {
             this.physics.arcade.moveToObject(b, this.target, 500);
         }
         this.bulletTime = this.time.now + this.fireSpeed;
+    },
+
+    quitGame: function (pointer) {
+        
+        
     }
     
 };

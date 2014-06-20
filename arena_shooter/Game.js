@@ -38,12 +38,6 @@ ArenaShooter.Game = function (game) {
     this.fireSpeed;    // how fast player can shoot bullets
  
     this.monsters;     // monster group
-    /*
-    this.monster;
-    this.monsterTime;  // time to release another monster? 
-    this.monsterSpeed; // how fast monsters are spawned
-    */
-
 };
 
 ArenaShooter.Game.prototype = {
@@ -102,19 +96,9 @@ ArenaShooter.Game.prototype = {
                 this.dist = (this.dist > 60) ? 60 : this.dist;
             }, this);
         
-        /*
-        // monsters
-        this.monster = this.add.sprite(200,200, "monster");
-        this.physics.enable(this.monster, Phaser.Physics.ARCADE);
-        this.monster.anchor.setTo(0.5, 0.5);
-        this.monster.scale.setTo(0.3, 0.3);
-        this.monster.body.setSize(90, 98, 0, 0);
-        this.monster.health = 100;
-        this.monsterTime = this.time.now;
-        //monsters = game.add.group();
-        */
 
-        this.monsters = new MonsterSpawner(this);
+
+        this.monsters = new MonsterSpawner(this, 300, 300, 300);
 
         this.stage.backgroundColor = '#DDDDDD';
     },
@@ -149,6 +133,7 @@ ArenaShooter.Game.prototype = {
             this.fire();
         }
 
+        console.log(this.monsters.killCount);
         this.monsters.moveTo(this.ninja.position.x, this.ninja.position.y);
         this.physics.arcade.collide(this.monsters, this.bullets, this.monsters.monsterHit, null, this);       
     },
@@ -163,6 +148,10 @@ ArenaShooter.Game.prototype = {
             this.physics.arcade.moveToObject(b, this.target, 500);
         }
         this.bulletTime = this.time.now + this.fireSpeed;
+    },
+
+    getPlayerPosition: function() {
+        return this.ninja.position;
     },
 
     quitGame: function (pointer) {

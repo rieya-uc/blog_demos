@@ -20,7 +20,7 @@ MonsterSpawner.prototype.constructor = MonsterSpawner;
 
 MonsterSpawner.prototype.update = function() {
     if (this.game.time.now > this.monsterTime) {
-        this.spawn();
+        //this.spawn();
         this.monsterTime = this.game.time.now + this.monsterSpawnSpeed;
     }
 };

@@ -38,6 +38,19 @@ ArenaShooter.Game = function (game) {
     this.fireSpeed;    // how fast player can shoot bullets
  
     this.monsters;     // monster group
+
+    this.killCount;
+};
+
+
+//  The Google WebFont Loader will look for this object, so create it before loading the script.
+WebFontConfig = {
+
+    //  The Google Fonts we want to load (specify as many as you like in the array)
+    google: {
+      families: ['Roboto Slab']
+    }
+
 };
 
 ArenaShooter.Game.prototype = {
@@ -99,6 +112,10 @@ ArenaShooter.Game.prototype = {
 
 
         this.monsters = new MonsterSpawner(this, 300, 300, 300);
+        this.killCount = this.add.text(30,30, "Killed: 0");
+        //this.killCount.font = "Roboto Slab";
+        this.killCount.fontSize = 30;
+        //this.killCount.fill = "#d3d3d3";
 
         this.stage.backgroundColor = '#DDDDDD';
     },
@@ -129,11 +146,26 @@ ArenaShooter.Game.prototype = {
         }
         
 
+        //this.ninja.rotation = this.game.physics.arcade.angleToXY(this.ninja, this.target.position.x, this.target.position.y);
+
+        this.ninja.rotation = this.game.physics.arcade.angleBetween(this.ninja, this.target);
+
+        /*
+        if (this.ninja.angle < 0 && this.ninja.scale > 0) {
+            this.ninja.scale.x *= -1;
+        }
+        else if (this.ninja.angle >= 0 && this.ninja.scale < 0){
+            this.ninja.scale.x *= -1;
+        }
+
+        //console.log(this.ninja.angle);
         if (this.time.now > this.bulletTime) {
             this.fire();
         }
 
-        console.log(this.monsters.killCount);
+        */
+
+        this.killCount.setText("Killed: " + this.monsters.killCount);
         this.monsters.moveTo(this.ninja.position.x, this.ninja.position.y);
         this.physics.arcade.collide(this.monsters, this.bullets, this.monsters.monsterHit, null, this);       
     },

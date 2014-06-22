@@ -30,7 +30,7 @@ ArenaShooter.Preloader.prototype = {
                 path = window.path;
             }
 
-            this.load.image("ninja", path+"assets/chars/ninja.png");
+            this.load.image("player", path+"assets/chars/player.png");
             this.load.image("circle", path+"assets/dashed_circle.png");
             this.load.image("bullet", path+"assets/chars/shuriken.png");
             this.load.image("monster", path+"assets/chars/blue_monster.png");

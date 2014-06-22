@@ -27,13 +27,13 @@ ArenaShooter.Game = function (game) {
 
 
     this.ninja;       // our player
-    this.dest;        // where our ninja is moving to
+    this.dest;        // where our player is moving to
 
     this.target;       // shooting direction
-    this.rotation;     // angle of target with respect to ninja
-    this.dist;         // distance of target from ninja
+    this.rotation;     // angle of target with respect to player
+    this.dist;         // distance of target from player
     
-    this.bullets;      // ninja's bullets group
+    this.bullets;      // player's bullets group
     this.bulletTime;   // time to fire another bullet
     this.fireSpeed;    // how fast player can shoot bullets
  
@@ -67,15 +67,15 @@ ArenaShooter.Game.prototype = {
 
         this.time.deltaCap = 1/60;
         
-        this.ninja = this.add.sprite(100,100,"ninja");
-        this.ninja.scale.setTo(0.5, 0.5);
-        this.ninja.anchor.setTo(0.5, 0.5);
+        this.player = this.add.sprite(100,100,"player");
+        this.player.scale.setTo(0.5, 0.5);
+        this.player.anchor.setTo(0.5, 0.5);
             
         // enable physics on our player
-        this.physics.enable(this.ninja, Phaser.Physics.ARCADE);
-        this.ninja.body.allowRotation = false;
+        this.physics.enable(this.player, Phaser.Physics.ARCADE);
+        this.player.body.allowRotation = false;
         
-        // where the ninja is moving to
+        // where the player is moving to
         this.dest = this.add.sprite(150, 150, "circle");
         this.dest.scale.setTo(0.4, 0.4);
         this.dest.anchor.setTo(0.5, 0.5);
@@ -104,8 +104,8 @@ ArenaShooter.Game.prototype = {
         
         this.input.onDown.add(
             function() {
-                this.rotation = this.physics.arcade.angleBetween(this.target, this.ninja);
-                this.dist = this.physics.arcade.distanceBetween(this.target, this.ninja);
+                this.rotation = this.physics.arcade.angleBetween(this.target, this.player);
+                this.dist = this.physics.arcade.distanceBetween(this.target, this.player);
                 this.dist = (this.dist > 60) ? 60 : this.dist;
             }, this);
         
@@ -123,50 +123,37 @@ ArenaShooter.Game.prototype = {
     update: function () {
         var r = 60;
 
-        if (this.input.activePointer.circle.contains(this.ninja.x, this.ninja.y)) {
-            this.ninja.body.velocity.setTo(0,0);
-            // snap ninja's centre to mouse position,
+        if (this.input.activePointer.circle.contains(this.player.x, this.player.y)) {
+            this.player.body.velocity.setTo(0,0);
+            // snap player's centre to mouse position,
             // compare how position is set here to how target.position
             // is set in create()
-            this.ninja.position.x = this.input.position.x;
-            this.ninja.position.y = this.input.position.y;
+            this.player.position.x = this.input.position.x;
+            this.player.position.y = this.input.position.y;
         }
         else {
-            this.physics.arcade.moveToPointer(this.ninja, 800);
+            this.physics.arcade.moveToPointer(this.player, 800);
         }
 
         if (this.input.mousePointer.isDown) {
-            this.target.position.x = this.ninja.position.x - this.dist*Math.cos(this.rotation);
-            this.target.position.y = this.ninja.position.y - this.dist*Math.sin(this.rotation);
+            this.target.position.x = this.player.position.x - this.dist*Math.cos(this.rotation);
+            this.target.position.y = this.player.position.y - this.dist*Math.sin(this.rotation);
         }
         else if (this.physics.arcade.distanceToPointer(this.target) > r) {
             this.rotation = this.physics.arcade.angleToPointer(this.target);
-            this.target.position.x = this.ninja.position.x - r*Math.cos(this.rotation);
-            this.target.position.y = this.ninja.position.y - r*Math.sin(this.rotation);
+            this.target.position.x = this.player.position.x - r*Math.cos(this.rotation);
+            this.target.position.y = this.player.position.y - r*Math.sin(this.rotation);
         }
         
 
-        //this.ninja.rotation = this.game.physics.arcade.angleToXY(this.ninja, this.target.position.x, this.target.position.y);
+        //this.player.rotation = this.game.physics.arcade.angleBetween(this.player, this.target);
 
-        this.ninja.rotation = this.game.physics.arcade.angleBetween(this.ninja, this.target);
-
-        /*
-        if (this.ninja.angle < 0 && this.ninja.scale > 0) {
-            this.ninja.scale.x *= -1;
-        }
-        else if (this.ninja.angle >= 0 && this.ninja.scale < 0){
-            this.ninja.scale.x *= -1;
-        }
-
-        //console.log(this.ninja.angle);
         if (this.time.now > this.bulletTime) {
             this.fire();
         }
 
-        */
-
         this.killCount.setText("Killed: " + this.monsters.killCount);
-        this.monsters.moveTo(this.ninja.position.x, this.ninja.position.y);
+        this.monsters.moveTo(this.player.position.x, this.player.position.y);
         this.physics.arcade.collide(this.monsters, this.bullets, this.monsters.monsterHit, null, this);       
     },
     
@@ -175,7 +162,7 @@ ArenaShooter.Game.prototype = {
     fire: function() {
         var b = this.bullets.getFirstExists(false);
         if (b !== null) {
-            b.reset(this.ninja.position.x, this.ninja.position.y);
+            b.reset(this.player.position.x, this.player.position.y);
             b.body.setSize(33,33,-1,0);
             this.physics.arcade.moveToObject(b, this.target, 500);
         }
@@ -183,7 +170,7 @@ ArenaShooter.Game.prototype = {
     },
 
     getPlayerPosition: function() {
-        return this.ninja.position;
+        return this.player.position;
     },
 
     quitGame: function (pointer) {

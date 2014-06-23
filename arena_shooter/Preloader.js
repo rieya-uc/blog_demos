@@ -1,3 +1,14 @@
+//  The Google WebFont Loader will look for this object, so create it before loading the script.
+WebFontConfig = {
+
+    //active: function() { game.time.events.add(Phaser.Timer.SECOND, update, this); },
+
+    //  The Google Fonts we want to load (specify as many as you like in the array)
+    google: {
+      families: ['Handlee']
+    }
+
+};
 
 ArenaShooter.Preloader = function (game) {
 
@@ -7,6 +18,7 @@ ArenaShooter.Preloader = function (game) {
 	this.ready = false;
 
 };
+
 
 ArenaShooter.Preloader.prototype = {
 
@@ -22,6 +34,11 @@ ArenaShooter.Preloader.prototype = {
 		//	as the files below are loaded in.
 		// this.load.setPreloadSprite(this.preloadBar);
 
+
+            // centre the canvas
+            this.scale.pageAlignHorizontally = true;
+            this.scale.refresh();
+
             var path;
             if (typeof window.path === "undefined") {
                 path = "";
@@ -34,7 +51,8 @@ ArenaShooter.Preloader.prototype = {
             this.load.image("circle", path+"assets/dashed_circle.png");
             this.load.image("bullet", path+"assets/chars/shuriken.png");
             this.load.image("monster", path+"assets/chars/blue_monster.png");
-            
+            this.load.atlas("pixels", path+"assets/pixels.png", path+"assets/pixels.json");
+            this.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 
             
 	},

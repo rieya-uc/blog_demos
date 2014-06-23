@@ -58,7 +58,7 @@ function create() {
      
 
     text = game.add.text(30,90, "Total: ");
-    text.font = "Roboto Slab";
+    text.font = "Rock Salt";
     text.fontSize = 30;
     text.fill = "#d3d3d3";
 

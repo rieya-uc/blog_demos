@@ -1,4 +1,3 @@
-
 ArenaShooter.Game = function (game) {
 
 	//	When a State is added to Phaser it automatically has the following properties set on it, even if they already exist:
@@ -26,8 +25,10 @@ ArenaShooter.Game = function (game) {
     //  you'll over-write the world reference.
 
 
-    this.ninja;       // our player
-    this.dest;        // where our player is moving to
+    this.player;       // our player
+    this.healthBar;
+    this.healthText;   // player health
+    this.dest;         // where our player is moving to
 
     this.target;       // shooting direction
     this.rotation;     // angle of target with respect to player
@@ -43,15 +44,7 @@ ArenaShooter.Game = function (game) {
 };
 
 
-//  The Google WebFont Loader will look for this object, so create it before loading the script.
-WebFontConfig = {
 
-    //  The Google Fonts we want to load (specify as many as you like in the array)
-    google: {
-      families: ['Roboto Slab']
-    }
-
-};
 
 ArenaShooter.Game.prototype = {
     
@@ -64,13 +57,20 @@ ArenaShooter.Game.prototype = {
         this.game.canvas.onmouseout = function() {
              this.style.cursor = "default";
         };
-
+        
+        // limit the fps, prevents physics errors
         this.time.deltaCap = 1/60;
         
+        // player
         this.player = this.add.sprite(100,100,"player");
         this.player.scale.setTo(0.5, 0.5);
         this.player.anchor.setTo(0.5, 0.5);
-            
+        this.player.health = 200;
+        this.healthText = this.add.text(150, 30, "Health: " + this.player.health);
+        this.healthText.font = "Handlee";
+        this.healthText.fontSize = 30;                                        
+        this.player.invincible = false;
+                                             
         // enable physics on our player
         this.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.body.allowRotation = false;
@@ -80,6 +80,7 @@ ArenaShooter.Game.prototype = {
         this.dest.scale.setTo(0.4, 0.4);
         this.dest.anchor.setTo(0.5, 0.5);
         this.dest.position = this.input.position;
+        
         
         // firing target
         this.target = this.add.sprite(0,0, "circle");
@@ -110,19 +111,19 @@ ArenaShooter.Game.prototype = {
             }, this);
         
 
-
+        // monsters
         this.monsters = new MonsterSpawner(this, 300, 300, 300);
         this.killCount = this.add.text(30,30, "Killed: 0");
-        //this.killCount.font = "Roboto Slab";
+        this.killCount.font = "Handlee";
         this.killCount.fontSize = 30;
-        //this.killCount.fill = "#d3d3d3";
 
         this.stage.backgroundColor = '#DDDDDD';
     },
     
     update: function () {
-        var r = 60;
+        var r = 60;  // how far the target sprite is from the player sprite
 
+        // move the player to the mouse
         if (this.input.activePointer.circle.contains(this.player.x, this.player.y)) {
             this.player.body.velocity.setTo(0,0);
             // snap player's centre to mouse position,
@@ -135,6 +136,7 @@ ArenaShooter.Game.prototype = {
             this.physics.arcade.moveToPointer(this.player, 800);
         }
 
+        // strafe
         if (this.input.mousePointer.isDown) {
             this.target.position.x = this.player.position.x - this.dist*Math.cos(this.rotation);
             this.target.position.y = this.player.position.y - this.dist*Math.sin(this.rotation);
@@ -144,17 +146,21 @@ ArenaShooter.Game.prototype = {
             this.target.position.x = this.player.position.x - r*Math.cos(this.rotation);
             this.target.position.y = this.player.position.y - r*Math.sin(this.rotation);
         }
-        
-
-        //this.player.rotation = this.game.physics.arcade.angleBetween(this.player, this.target);
-
+ 
+        // fire off a bullet
         if (this.time.now > this.bulletTime) {
             this.fire();
         }
 
+        // update ui text
         this.killCount.setText("Killed: " + this.monsters.killCount);
+        this.healthText.setText("Health: " + this.player.health);
+        // move monsters towards player
         this.monsters.moveTo(this.player.position.x, this.player.position.y);
+
+        // check for collisions
         this.physics.arcade.collide(this.monsters, this.bullets, this.monsters.monsterHit, null, this);       
+        this.physics.arcade.collide(this.player, this.monsters, this.playerHit, null, this);
     },
     
 
@@ -167,6 +173,29 @@ ArenaShooter.Game.prototype = {
             this.physics.arcade.moveToObject(b, this.target, 500);
         }
         this.bulletTime = this.time.now + this.fireSpeed;
+    },
+
+    /*
+    render: function() {
+        this.game.debug.body(this.player);
+    },
+    */
+
+    playerHit: function(player, monster) {
+        if (!player.invincible) {
+            player.invincible = true;
+            player.tint = 0xFF0000;
+            player.tween = this.add.tween(player).to({alpha:0.2}, 300, null, true, 0, 5, false);
+            player.tween.onComplete.add(this.tweenComplete, this);
+            player.damage(5);
+        }
+        this.monsters.monsterHit(monster);
+    },
+
+    tweenComplete: function() {
+        this.player.invincible = false;
+        this.player.alpha = 1;
+        this.player.tint = 0xFFFFFF;
     },
 
     getPlayerPosition: function() {

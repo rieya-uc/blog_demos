@@ -41,14 +41,14 @@ MonsterSpawner.prototype.spawn = function() {
     
     var monster = this.getFirstExists(false);
     if (monster !== null) {
-        monster.reset(xpos, ypos);
+        monster.reset(xpos, ypos, 30);
         this.game.physics.enable(monster, Phaser.Physics.ARCADE);
         monster.anchor.setTo(0.5, 0.5);
         monster.scale.setTo(0.3, 0.3);
         monster.body.setSize(90, 98, 0, 0);
         //monster.checkWorldBounds(true);
         //monster.body.collideWorldBounds = true;
-        monster.health = 30;
+        //monster.health = 30;
 
         monster.events.onKilled.add(function() {
             this.killCount++;
@@ -63,6 +63,8 @@ MonsterSpawner.prototype.moveTo = function(x, y) {
 };
 
 MonsterSpawner.prototype.monsterHit = function(monster, bullet) {
-    bullet.kill();
+    if (bullet) {
+        bullet.kill();
+    }
     monster.damage(5);
 };

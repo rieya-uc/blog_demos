@@ -41,15 +41,13 @@ ArenaShooter.Game = function (game) {
     this.monsters;     // monster group
 
     this.killCount;
+
+
 };
 
-
-
-
 ArenaShooter.Game.prototype = {
-    
+
     create: function () {
-        
         // hide the mouse cursor when it's over the game
         this.game.canvas.onmouseover = function(e) {
              this.style.cursor = "none";
@@ -58,7 +56,7 @@ ArenaShooter.Game.prototype = {
              this.style.cursor = "default";
         };
         
-        // limit the fps, prevents physics errors
+        // limit the fps, prevents physics errors, 1/60 = 60fps
         this.time.deltaCap = 1/60;
         
         // player
@@ -66,9 +64,14 @@ ArenaShooter.Game.prototype = {
         this.player.scale.setTo(0.5, 0.5);
         this.player.anchor.setTo(0.5, 0.5);
         this.player.health = 200;
-        this.healthText = this.add.text(150, 30, "Health: " + this.player.health);
-        this.healthText.font = "Handlee";
-        this.healthText.fontSize = 30;                                        
+
+        this.healthBar = this.add.sprite(460, 35, "pixels");
+        this.healthBar.frame = 1;
+        this.healthBar.height = 15;
+        this.healthBar.width = this.player.health;
+
+        this.add.text(360, 30, "Health: ", {font: "30px Handlee"});
+        this.healthText = this.add.text(680, 30, this.player.health, {font: "30px Handlee"});                               
         this.player.invincible = false;
                                              
         // enable physics on our player
@@ -152,9 +155,11 @@ ArenaShooter.Game.prototype = {
             this.fire();
         }
 
-        // update ui text
+        // update ui
         this.killCount.setText("Killed: " + this.monsters.killCount);
-        this.healthText.setText("Health: " + this.player.health);
+        this.healthText.setText(this.player.health);
+        this.healthBar.width = this.player.health;
+
         // move monsters towards player
         this.monsters.moveTo(this.player.position.x, this.player.position.y);
 
@@ -185,7 +190,7 @@ ArenaShooter.Game.prototype = {
         if (!player.invincible) {
             player.invincible = true;
             player.tint = 0xFF0000;
-            player.tween = this.add.tween(player).to({alpha:0.2}, 300, null, true, 0, 5, false);
+            player.tween = this.add.tween(player).to({alpha:0.2}, 300, null, true, 0, 3, false);
             player.tween.onComplete.add(this.tweenComplete, this);
             player.damage(5);
         }

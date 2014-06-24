@@ -10,9 +10,8 @@
     <script type="text/javascript" src="arena_shooter/Boot.js"></script>
     <script type="text/javascript" src="arena_shooter/Preloader.js"></script>
     <script type="text/javascript" src="arena_shooter/MonsterSpawner.js"></script>
-    <!--<script type="text/javascript" src="arena_shooter/MainMenu.js"></script>-->
+    <script type="text/javascript" src="arena_shooter/MainMenu.js"></script>
     <script type="text/javascript" src="arena_shooter/Game.js"></script>
-    <!--<script type="text/javascript" src="arena_shooter/arena_shooter.js"></script>-->
     
     <div id="demo"></div>
     
@@ -30,7 +29,7 @@
 
       game.state.add('Boot', ArenaShooter.Boot);
       game.state.add('Preloader', ArenaShooter.Preloader);
-      //game.state.add('MainMenu', ArenaShooter.MainMenu);
+      game.state.add('MainMenu', ArenaShooter.MainMenu);
       game.state.add('Game', ArenaShooter.Game);
 
       //	Now start the Boot state.

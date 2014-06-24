@@ -1,6 +1,6 @@
 ArenaShooter.Game = function (game) {
 
-	//	When a State is added to Phaser it automatically has the following properties set on it, even if they already exist:
+    //	When a State is added to Phaser it automatically has the following properties set on it, even if they already exist:
 
     this.game;		//	a reference to the currently running game
     this.add;		//	used to add sprites, text, groups, etc
@@ -37,30 +37,32 @@ ArenaShooter.Game = function (game) {
     this.bullets;      // player's bullets group
     this.bulletTime;   // time to fire another bullet
     this.fireSpeed;    // how fast player can shoot bullets
- 
+    
     this.monsters;     // monster group
 
     this.killCount;
 
-
+    this.paused = true;
 };
 
 ArenaShooter.Game.prototype = {
 
     create: function () {
+
         // hide the mouse cursor when it's over the game
         this.game.canvas.onmouseover = function(e) {
-             this.style.cursor = "none";
+            this.style.cursor = "none";
         };
         this.game.canvas.onmouseout = function() {
-             this.style.cursor = "default";
+            this.style.cursor = "default";
         };
-        
+        this.game.canvas.style.cursor = "none";
+
         // limit the fps, prevents physics errors, 1/60 = 60fps
         this.time.deltaCap = 1/60;
         
         // player
-        this.player = this.add.sprite(100,100,"player");
+        this.player = this.add.sprite(400,300,"player");
         this.player.scale.setTo(0.5, 0.5);
         this.player.anchor.setTo(0.5, 0.5);
         this.player.health = 200;
@@ -73,7 +75,7 @@ ArenaShooter.Game.prototype = {
         this.add.text(360, 30, "Health: ", {font: "30px Handlee"});
         this.healthText = this.add.text(680, 30, this.player.health, {font: "30px Handlee"});                               
         this.player.invincible = false;
-                                             
+                           
         // enable physics on our player
         this.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.body.allowRotation = false;
@@ -83,7 +85,6 @@ ArenaShooter.Game.prototype = {
         this.dest.scale.setTo(0.4, 0.4);
         this.dest.anchor.setTo(0.5, 0.5);
         this.dest.position = this.input.position;
-        
         
         // firing target
         this.target = this.add.sprite(0,0, "circle");
@@ -149,7 +150,7 @@ ArenaShooter.Game.prototype = {
             this.target.position.x = this.player.position.x - r*Math.cos(this.rotation);
             this.target.position.y = this.player.position.y - r*Math.sin(this.rotation);
         }
- 
+        
         // fire off a bullet
         if (this.time.now > this.bulletTime) {
             this.fire();
@@ -166,6 +167,7 @@ ArenaShooter.Game.prototype = {
         // check for collisions
         this.physics.arcade.collide(this.monsters, this.bullets, this.monsters.monsterHit, null, this);       
         this.physics.arcade.collide(this.player, this.monsters, this.playerHit, null, this);
+
     },
     
 
@@ -181,9 +183,9 @@ ArenaShooter.Game.prototype = {
     },
 
     /*
-    render: function() {
-        this.game.debug.body(this.player);
-    },
+      render: function() {
+      this.game.debug.body(this.player);
+      },
     */
 
     playerHit: function(player, monster) {

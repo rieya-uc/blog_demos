@@ -55,6 +55,7 @@ ArenaShooter.Preloader.prototype = {
         this.load.image("bullet", path+"assets/chars/shuriken.png");
         this.load.image("monster", path+"assets/chars/blue_monster.png");
         this.load.atlas("pixels", path+"assets/pixels.png", path+"assets/pixels.json");
+        this.load.atlasXML("buttons", path+"assets/ui/greenButtons.png", path+"assets/ui/greenButtons.xml");
         this.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 
 
@@ -67,6 +68,6 @@ ArenaShooter.Preloader.prototype = {
 	// this.preloadBar.cropEnabled = false;
 
         this.ready = true;
-	this.state.start('Game');
+	this.state.start('MainMenu');
     },
 };

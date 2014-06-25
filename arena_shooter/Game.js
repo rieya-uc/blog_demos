@@ -35,14 +35,12 @@ ArenaShooter.Game = function (game) {
     this.dist;         // distance of target from player
     
     this.bullets;      // player's bullets group
-    this.bulletTime;   // time to fire another bullet
+    this.bulletTime;   // the time stamp of we can fire another bullet
     this.fireSpeed;    // how fast player can shoot bullets
     
-    this.monsters;     // monster group
+    this.monsters;     // monsters group
 
     this.killCount;
-
-    this.paused = true;
 };
 
 ArenaShooter.Game.prototype = {
@@ -65,17 +63,16 @@ ArenaShooter.Game.prototype = {
         this.player = this.add.sprite(400,300,"player");
         this.player.scale.setTo(0.5, 0.5);
         this.player.anchor.setTo(0.5, 0.5);
-        this.player.health = 200;
+        this.player.health = 100;
+        this.player.events.onKilled.add(this.playerDeath, this);
 
         this.healthBar = this.add.sprite(460, 35, "pixels");
         this.healthBar.frame = 1;
         this.healthBar.height = 15;
         this.healthBar.width = this.player.health;
-
-        this.add.text(360, 30, "Health: ", {font: "30px Handlee"});
-        this.healthText = this.add.text(680, 30, this.player.health, {font: "30px Handlee"});                               
+        
         this.player.invincible = false;
-                           
+                                                  
         // enable physics on our player
         this.physics.enable(this.player, Phaser.Physics.ARCADE);
         this.player.body.allowRotation = false;
@@ -107,6 +104,7 @@ ArenaShooter.Game.prototype = {
         this.fireSpeed = 100;
         this.bulletTime = this.time.now + this.fireSpeed;
         
+        // strafe when lmb down
         this.input.onDown.add(
             function() {
                 this.rotation = this.physics.arcade.angleBetween(this.target, this.player);
@@ -120,6 +118,10 @@ ArenaShooter.Game.prototype = {
         this.killCount = this.add.text(30,30, "Killed: 0");
         this.killCount.font = "Handlee";
         this.killCount.fontSize = 30;
+
+        // ui text
+        this.add.text(360, 30, "Health: ", {font: "30px Handlee"});
+        this.healthText = this.add.text(600, 30, this.player.health, {font: "30px Handlee"});       
 
         this.stage.backgroundColor = '#DDDDDD';
     },
@@ -165,8 +167,10 @@ ArenaShooter.Game.prototype = {
         this.monsters.moveTo(this.player.position.x, this.player.position.y);
 
         // check for collisions
-        this.physics.arcade.collide(this.monsters, this.bullets, this.monsters.monsterHit, null, this);       
-        this.physics.arcade.collide(this.player, this.monsters, this.playerHit, null, this);
+        if (this.player.health > 0) {
+            this.physics.arcade.collide(this.monsters, this.bullets, this.monsters.monsterHit, null, this);       
+            this.physics.arcade.collide(this.player, this.monsters, this.playerHit, null, this);
+        }
 
     },
     
@@ -190,6 +194,7 @@ ArenaShooter.Game.prototype = {
 
     playerHit: function(player, monster) {
         if (!player.invincible) {
+            // make the player sprite flash red while invincible
             player.invincible = true;
             player.tint = 0xFF0000;
             player.tween = this.add.tween(player).to({alpha:0.2}, 300, null, true, 0, 3, false);
@@ -209,9 +214,38 @@ ArenaShooter.Game.prototype = {
         return this.player.position;
     },
 
+    playerDeath: function() {
+        this.game.canvas.style.cursor = "default";
+        this.game.canvas.onmouseover = null;
+
+        this.dest.destroy();
+        this.target.destroy();
+        this.bullets.destroy();
+
+        var text;
+        text = this.add.text(400, 200, "Oh no, you died!", {font:"24px Handlee"});
+        text.anchor.setTo(0.5, 0.5);
+        text = this.add.text(400, 250,
+                      "You managed to kill " + this.monsters.killCount + " monster(s)",
+                      {font: "26px Handlee"});
+        text.anchor.setTo(0.5, 0.5);
+               
+        // I really need to make a generic text button object
+        var btn = this.add.button(400, 300, "buttons", this.restart, this,
+                                  "green_button00.png", "green_button00.png", 
+                                  "green_button02.png", "green_button00.png");
+        btn.anchor.setTo(0.5, 0.5);
+        text = this.add.text(btn.x, btn.y, "Restart");
+        text.anchor.setTo(0.5, 0.5);
+        
+    },
+
+    restart: function() {
+        this.state.start(this.state.current);
+    },
+
     quitGame: function (pointer) {
         
         
     }
-    
 };

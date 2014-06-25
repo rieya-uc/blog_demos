@@ -94,8 +94,8 @@ ArenaShooter.Game.prototype = {
         this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
         
         this.bullets.createMultiple(30, "bullet");
-        this.bullets.setAll("scale.x", 0.5);
-        this.bullets.setAll("scale.y", 0.5);
+        //this.bullets.setAll("scale.x", 0.5);
+        //this.bullets.setAll("scale.y", 0.5);
         this.bullets.setAll("anchor.x", 0.5);
         this.bullets.setAll("anchor.y", 0.5);
         this.bullets.setAll("outOfBoundsKill", true);
@@ -180,7 +180,7 @@ ArenaShooter.Game.prototype = {
         var b = this.bullets.getFirstExists(false);
         if (b !== null) {
             b.reset(this.player.position.x, this.player.position.y);
-            b.body.setSize(33,33,-1,0);
+            b.body.setSize(14,14,0,0);
             this.physics.arcade.moveToObject(b, this.target, 500);
         }
         this.bulletTime = this.time.now + this.fireSpeed;
@@ -201,7 +201,8 @@ ArenaShooter.Game.prototype = {
             player.tween.onComplete.add(this.tweenComplete, this);
             player.damage(5);
         }
-        this.monsters.monsterHit(monster);
+
+        //this.monsters.monsterHit(monster);
     },
 
     tweenComplete: function() {

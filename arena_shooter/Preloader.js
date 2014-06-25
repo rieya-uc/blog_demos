@@ -50,9 +50,16 @@ ArenaShooter.Preloader.prototype = {
             path = window.path;
         }
 
-        this.load.image("player", path+"assets/chars/player.png");
+        // button sprites taken from opengameart.org/content/ui-pack
+        // chars/green_sprite taken from opengameart.org/content/platformer-art-more-animations-and-enemies
+        // credit to Kenny.nl
+
+        // chars/blue_monster taken from opengameart.org/content/monsters-2d-pack-no-2
+        // credit to Alucard (http://opengameart.org/users/alucard)
+
+        this.load.image("player", path+"assets/chars/green_sprite.png");
         this.load.image("circle", path+"assets/dashed_circle.png");
-        this.load.image("bullet", path+"assets/chars/shuriken.png");
+        this.load.image("bullet", path+"assets/bullet.png");
         this.load.image("monster", path+"assets/chars/blue_monster.png");
         this.load.atlas("pixels", path+"assets/pixels.png", path+"assets/pixels.json");
         this.load.atlasXML("buttons", path+"assets/ui/greenButtons.png", path+"assets/ui/greenButtons.xml");

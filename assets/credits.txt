@@ -1,7 +1,10 @@
 Blur scripts taken from Phaser's examples, Filters -> Blur, 
 with credit to Mat Groves, http://matgroves.com/ @Doormat23
 
-
 Dice spritesheet taken from http://opengameart.org/content/boardgame-pack, 
-and buttons spritesheet taken from http://opengameart.org/content/ui-pack,
+buttons spritesheet taken from http://opengameart.org/content/ui-pack,
+chars/green_sprite taken from http://opengameart.org/content/platformer-art-more-animations-and-enemies
 with credit to Kenney.nl
+
+chars/blue_monster taken from http://opengameart.org/content/monsters-2d-pack-no-2,
+with credit to Alucard (http://opengameart.org/users/alucard)

@@ -39,8 +39,8 @@ ArenaShooter.Preloader.prototype = {
 
 
         // centre the canvas
-        this.scale.pageAlignHorizontally = true;
-        this.scale.refresh();
+        // this.scale.pageAlignHorizontally = true;
+        // this.scale.refresh();
 
         var path;
         if (typeof window.path === "undefined") {

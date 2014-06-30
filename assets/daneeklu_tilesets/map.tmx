@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="40" height="20" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="plowed_soil" tilewidth="32" tileheight="32">
+  <image source="plowed_soil.png" width="96" height="192"/>
+ </tileset>
+ <tileset firstgid="19" name="plants" tilewidth="32" tileheight="32">
+  <image source="plants.png" width="288" height="384"/>
+ </tileset>
+ <tileset firstgid="127" name="farming_fishing" tilewidth="32" tileheight="32">
+  <image source="farming_fishing.png" width="640" height="640"/>
+ </tileset>
+ <layer name="background" width="40" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztk+sKgCAMRrtf1Or937YFjUaoi2VlsAPnh6jbh8OiUJSD8uZaSg8OHsdE9WkPSU0DWmIF1qDb95sE+bCH4w4G7mKmrUYLdsJaISZwBhfBXUMy0XfEfG/Mn8tnPbqL+0+Db38WZ/F1Po4c8sX+aA75YnDzVxRF+Rsr/mUD1A==
+  </data>
+ </layer>
+ <layer name="plants" width="40" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztw8EJACAMBLAu4jLO4DCO7wIHfQl9JJAqADornGSHk5xwkhsC8McDayEF2A==
+  </data>
+ </layer>
+</map>

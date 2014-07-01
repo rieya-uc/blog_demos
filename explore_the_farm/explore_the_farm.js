@@ -5,6 +5,8 @@ var map;
 var layer;
 var player;
 var cursorKeys;
+var animRef;
+var speed;
 
 function preload() {
 
@@ -26,8 +28,6 @@ function preload() {
 
     // char
     game.load.spritesheet("player", "assets/chars/mage_f.png", 32, 36);
-
-    cursorKeys = game.input.keyboard.createCursorKeys();
 }
 
 function create() {
@@ -41,32 +41,55 @@ function create() {
     layer = map.createLayer("background");
     layer = map.createLayer("plants");
     
-    player = game.add.sprite(100,100,"player");
-    player.animations.add("walkRight", [3,4,5,4], 7, true);
-    player.animations.add("walkLeft", [9,10,11,9], 7, true);
-    player.animations.add("walkUp", [0,1,2,1], 7, true);
-    player.animations.add("walkDown", [6,7,8,7], 7, true);
-    
     //layer.resizeWorld();
+
+    cursorKeys = game.input.keyboard.createCursorKeys();
+    speed = 2;
+    lastKeyPressed = null;
+    animRef = null;
+
+    player = game.add.sprite(100,100,"player");
+
+    var animSpeed = 8;
+    player.animations.add("walkUp", [0,1,2,1], animSpeed, true);
+    player.animations.add("walkDown", [6,7,8,7], animSpeed, true);
+    player.animations.add("walkLeft", [9,10,11,10], animSpeed, true);
+    player.animations.add("walkRight", [3,4,5,4], animSpeed, true);
+
+    player.frame = 7;
+ 
+
 }
 
 
 
 function update() {
 
+    
     if (cursorKeys.up.isDown) {
-        player.animations.play("walkUp");
+        animRef = animRef || player.animations.play("walkUp");
+        player.position.y -= speed;
     }
     else if (cursorKeys.down.isDown) {
-        player.animations.play("walkDown");
+        animRef = animRef || player.animations.play("walkDown");
+        player.position.y += speed;
     }
     else if (cursorKeys.left.isDown) {
-        player.animations.play("walkLeft");
+        animRef = animRef || player.animations.play("walkLeft");
+        player.position.x -= speed;
     }
     else if (cursorKeys.right.isDown) {
-        player.animations.play("walkRight");
+        animRef = animRef || player.animations.play("walkRight");
+        player.position.x += speed;
     }
-    console.log(player.animations.isPlaying);
+    else if (animRef !== null ) {
+        animRef.setFrame(1, true);
+        animRef.stop();
+        animRef = null;
+    }
+
+    
+    
 
 }
 

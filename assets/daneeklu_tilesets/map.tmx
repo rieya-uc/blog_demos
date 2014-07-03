@@ -3,25 +3,23 @@
  <tileset firstgid="1" name="plowed_soil" tilewidth="32" tileheight="32">
   <image source="plowed_soil.png" width="96" height="192"/>
  </tileset>
- <tileset firstgid="19" name="plants" tilewidth="32" tileheight="32">
-  <image source="plants.png" width="288" height="384"/>
+ <tileset firstgid="19" name="fence" tilewidth="32" tileheight="32">
+  <image source="fence.png" width="96" height="192"/>
  </tileset>
- <tileset firstgid="127" name="farming_fishing" tilewidth="32" tileheight="32">
-  <image source="farming_fishing.png" width="640" height="640"/>
- </tileset>
- <layer name="background" width="40" height="20">
+ <layer name="farming_plots" width="40" height="20">
   <data encoding="base64" compression="zlib">
-   eJztk+sKgCAMRrtf1Or937YFjUaoi2VlsAPnh6jbh8OiUJSD8uZaSg8OHsdE9WkPSU0DWmIF1qDb95sE+bCH4w4G7mKmrUYLdsJaISZwBhfBXUMy0XfEfG/Mn8tnPbqL+0+Db38WZ/F1Po4c8sX+aA75YnDzVxRF+Rsr/mUD1A==
+   eJxjYBgFo2AUEAMkgViEAFZC06NCQL00Fd0nTkWzaGHmUHAfOxBzoGFOqDw5ctR2HxcQc6NhHqg8OXKj7ht1Hynu4wViPjTMD5UnR26klS/UBtQ0U56BcP1GKlakovtGwfADAIPRCec=
   </data>
  </layer>
- <layer name="plants" width="40" height="20">
+ <objectgroup name="fixed_collision" width="40" height="20">
+  <object name="collide" x="102" y="157" width="316" height="32"/>
+  <object x="507" y="155">
+   <polyline points="0,0 2,37 280,34 281,1 1,1"/>
+  </object>
+ </objectgroup>
+ <layer name="test_layer" width="40" height="20" visible="0">
   <data encoding="base64" compression="zlib">
-   eJztw8EJACAMBLAu4jLO4DCO7wIHfQl9JJAqADornGSHk5xwkhsC8McDayEF2A==
-  </data>
- </layer>
- <layer name="objects" width="40" height="20">
-  <data encoding="base64" compression="zlib">
-   eJztzsENgCAUwNDPhCrqBKjg/gvQxBE8SGJf0nsjJElvTSlipoUyrbTRnr4+exQ+DjrpokqN7kH+JEn/0QGwYAUX
+   eJztzrcRwlAABcEvrPAgjPC+/xrZEkiUvZvZ/LallB17DrQcOXHmwpUbdx48efHmw7d0V0WPPgOGjBhTM2HKjDkLlqxYs6Hp8C+llFJKKaX0fz/A2QKb
   </data>
  </layer>
 </map>

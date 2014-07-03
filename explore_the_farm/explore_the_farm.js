@@ -3,7 +3,8 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, "demo", {preload:preload, crea
 
 var map;
 var layer;
-var plantsLayer;
+var scenery; // group
+var sceneryLayer;
 var player;
 var cursorKeys;
 var animRef;
@@ -27,6 +28,7 @@ function preload() {
 
     game.load.tilemap("map", "assets/daneeklu_tilesets/map.json", null, Phaser.Tilemap.TILED_JSON);
     game.load.image("soil", "assets/daneeklu_tilesets/plowed_soil.png");
+    game.load.image("fences", "assets/daneeklu_tilesets/fence.png");
     game.load.image("plants", "assets/daneeklu_tilesets/plants.png");
     game.load.image("farming", "assets/daneeklu_tilesets/farming_fishing.png");
 
@@ -35,34 +37,41 @@ function preload() {
 }
 
 function create() {
-    // limit the fps, prevents physics errors, 1/60 = 60fps
-    //game.time.deltaCap = 1/60;
 
     game.stage.backgroundColor = '#2F8136';
+    game.physics.startSystem(Phaser.Physics.P2JS);
 
     map = game.add.tilemap("map");
     map.addTilesetImage("plowed_soil", "soil");
-    map.addTilesetImage("plants", "plants");
-    map.addTilesetImage("farming_fishing", "farming")
+    map.addTilesetImage("fence", "fences");
 
-    layer = map.createLayer("background");
-    //plantsLayer = new Phaser.Tilemap(game, map, 1, 40, 20);
-    //layer = map.createLayer("plants");
+    layer = map.createLayer("farming_plots");
+    layer.resizeWorld();
 
     scenery = game.add.group();
 
-    //layer = map.createLayer("objects");//, game.width, game.height, scenery);
-    
-    layer.resizeWorld();
-    //game.physics.enable(scenery, Phaser.Physics.ARCADE);
+    // METHOD 1 of creating collision objects using Tiled
+    // draw the collidable areas in an Object Layer using Polyline
+    // doesn't work with Tiled.Rectangle etc, only Polyline
+       // game.physics.p2.convertCollisionObjects(map, "fixed_collision");
+
+
+    // METHOD 2 (see example P2 Physics -> Tilemap)
+    // To find the tile indexses, I created a test_layer in Tiled and 
+    // placed all the collidable tiles next to each other, then looked
+    // at the .json file 
+    map.setCollisionBetween(19,36);
+    game.physics.p2.convertTilemap(map, layer);
+
+
+    // player
 
     cursorKeys = game.input.keyboard.createCursorKeys();
-    speed = 2;
+    speed = 200;
     lastKeyPressed = null;
     animRef = null;
 
     player = game.add.sprite(400,100,"player");
-    //game.physics.enable(player, Phaser.Physics.ARCADE);
     
     var animSpeed = 8;
     player.animations.add("walkUp", [0,1,2,1], animSpeed, true);
@@ -71,7 +80,9 @@ function create() {
     player.animations.add("walkRight", [3,4,5,4], animSpeed, true);
 
     player.frame = 7;
- 
+    game.physics.p2.enable(player);
+    player.body.fixedRotation = true;
+
     game.camera.follow(player);
 
     fps = game.add.text(50,50, 0);
@@ -81,31 +92,29 @@ function create() {
 
 
 function update() {
-
+    player.body.setZeroVelocity();
     
     if (cursorKeys.up.isDown) {
         animRef = player.animations.play("walkUp") || animRef;
-        //player.body.velocity.y -= speed;
-        player.position.y -= speed;
+        player.body.moveUp(speed);
+        //player.position.y -= speed;
     }
     else if (cursorKeys.down.isDown) {
         animRef = player.animations.play("walkDown") || animRef;
-        //player.body.velocity.y += speed;
-        player.position.y += speed;
+        player.body.moveDown(speed);
+        //player.position.y += speed;
     }
     else if (cursorKeys.left.isDown) {
         animRef = player.animations.play("walkLeft") || animRef;
-        player.position.x -= speed;
-        //player.body.velocity.x -= speed;
-
+        player.body.moveLeft(speed);
+        //player.position.x -= speed;
     }
     else if (cursorKeys.right.isDown) {
         animRef = player.animations.play("walkRight") || animRef;
-        //player.body.velocity.x += speed;
-        player.position.x += speed;
+        player.body.moveRight(speed);
+        //player.position.x += speed;
     }
     else if (animRef !== null ) {
-        //player.body.velocity.setTo(0,0);
         animRef.setFrame(1, true);
         animRef.stop();
         animRef = null;
@@ -113,9 +122,8 @@ function update() {
 
     game.time.advancedTiming = true;
     fps.setText(game.time.fps);
-    //game.physics.arcade.collide(player, scenery, function() {console.log("collide");}, null, this);
-
 }
 
 function render() {
+    game.debug.body(player);
 }

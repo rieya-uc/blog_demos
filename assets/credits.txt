@@ -9,11 +9,14 @@ with credit to Kenney.nl
 chars/blue_monster taken from http://opengameart.org/content/monsters-2d-pack-no-2,
 with credit to Alucard (http://opengameart.org/users/alucard)
 
-daneeklu_tilesets/ taken from http://opengameart.org/content/farming-tilesets-magic-animations-and-ui-elements
+tilesets/daneeklu_tilesets/ taken from http://opengameart.org/content/farming-tilesets-magic-animations-and-ui-elements
 with credit to Daniel Eddeland
 and is dual licensed under the following licenses.
 *CC-BY-SA 3.0
 *GNU GPL 3.0 or later
+
+tilesets/lpc/ taken from http://opengameart.org/content/lpc-tile-atlas
+see tilesets/lpc/Attribution.txt for full list of contributors and licensing details
 
 chars/mage_f.png taken from http://opengameart.org/content/antifareas-rpg-sprite-set-1-enlarged-w-transparent-background-fixed
 with credit to Antifarea

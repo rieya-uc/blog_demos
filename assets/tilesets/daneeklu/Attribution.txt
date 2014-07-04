@@ -1,0 +1,6 @@
+Taken from: http://opengameart.org/content/farming-tilesets-magic-animations-and-ui-elements
+
+with credit to Daniel Eddeland
+dual licensed under the following licenses.
+*CC-BY-SA 3.0
+*GNU GPL 3.0 or later

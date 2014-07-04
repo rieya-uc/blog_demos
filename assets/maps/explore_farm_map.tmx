@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="40" height="40" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="terrain_atlas" tilewidth="32" tileheight="32">
+  <image source="../tilesets/lpc/terrain_atlas.png" width="1024" height="1024"/>
+ </tileset>
+ <tileset firstgid="1025" name="base_out_atlas" tilewidth="32" tileheight="32">
+  <image source="../tilesets/lpc/base_out_atlas.png" width="1024" height="1024"/>
+ </tileset>
+ <tileset firstgid="2049" name="fence" tilewidth="32" tileheight="32">
+  <image source="../tilesets/daneeklu/fence.png" width="96" height="192"/>
+ </tileset>
+ <tileset firstgid="2067" name="farming_fishing" tilewidth="32" tileheight="32">
+  <image source="../tilesets/daneeklu/farming_fishing.png" width="640" height="640"/>
+ </tileset>
+ <layer name="background" width="40" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztlU0KgkAYhicxmhZRdIhq2wVqV22zO2jLcFl36OcKdYkO0S0qqxP0D33iJ8nAqIGOBt8Dz0JGfJ+NDGMEQRAEQRD/TYkzpoVYAyc6YzZYj3i3zJPvK+I3nYL8Hb8v7reSJM4389LX0BhrCra0b5/sXFVfD7b6goNAn+yc+qgviT4TtizBcaBPdq6qT4bb1waHEg09274l7K9CtFPsq0TcWeJdJz67+HdfNYW+JIhzt6TFnnse0Qu6RVX2dWCvC87BBW5fuecdfaM7VGWfAXsjcA1ucPvAPR30hJ5RlX0+JuxauH3jng/0ib7QLPqmsDv74V/M8v+IQ977CIIgXD4TR1A8
+  </data>
+ </layer>
+</map>

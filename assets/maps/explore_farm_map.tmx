@@ -3,18 +3,25 @@
  <tileset firstgid="1" name="terrain_atlas" tilewidth="32" tileheight="32">
   <image source="../tilesets/lpc/terrain_atlas.png" width="1024" height="1024"/>
  </tileset>
- <tileset firstgid="1025" name="base_out_atlas" tilewidth="32" tileheight="32">
-  <image source="../tilesets/lpc/base_out_atlas.png" width="1024" height="1024"/>
- </tileset>
- <tileset firstgid="2049" name="fence" tilewidth="32" tileheight="32">
+ <tileset firstgid="1025" name="fence" tilewidth="32" tileheight="32">
   <image source="../tilesets/daneeklu/fence.png" width="96" height="192"/>
  </tileset>
- <tileset firstgid="2067" name="farming_fishing" tilewidth="32" tileheight="32">
+ <tileset firstgid="1043" name="farming_fishing" tilewidth="32" tileheight="32">
   <image source="../tilesets/daneeklu/farming_fishing.png" width="640" height="640"/>
  </tileset>
- <layer name="background" width="40" height="40">
+ <layer name="objects" width="40" height="40" visible="0">
   <data encoding="base64" compression="zlib">
-   eJztlU0KgkAYhicxmhZRdIhq2wVqV22zO2jLcFl36OcKdYkO0S0qqxP0D33iJ8nAqIGOBt8Dz0JGfJ+NDGMEQRAEQRD/TYkzpoVYAyc6YzZYj3i3zJPvK+I3nYL8Hb8v7reSJM4389LX0BhrCra0b5/sXFVfD7b6goNAn+yc+qgviT4TtizBcaBPdq6qT4bb1waHEg09274l7K9CtFPsq0TcWeJdJz67+HdfNYW+JIhzt6TFnnse0Qu6RVX2dWCvC87BBW5fuecdfaM7VGWfAXsjcA1ucPvAPR30hJ5RlX0+JuxauH3jng/0ib7QLPqmsDv74V/M8v+IQ977CIIgXD4TR1A8
+   eJztzltugVEUhmFtqTrWqSgD0FAMwFkHQGoIRYdAGILTECpMgkF0FHWchVfyX2riZicuvjd5spN9sda6s9ts93hAAUWUUEYFf9hgix32OOCIFdb4hanszHbgEQ00rV2fvC2EEcELooghjlckkDR42zkn85/gwhfa6KCLb6TwZt2Q5s3gHVnkkDd8n5v5HnjRQ9/aN+Ad/rO7yn8NdXwYvs/HfD+eMcIYE0wxM7z7mgLcEEQIP5hbNy14lzdwn1JKKaWUUkoppZRSSqnLnQBaDxkq
+  </data>
+ </layer>
+ <layer name="layout" width="40" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztlkEKwjAQRcdQERei9BDqVg9hXaqHUJfqSdRD9hxOoKElMEmwadLFf/BWCcmjhU6JAAAAAAD6c2Ivme6eFUTK4Yp98L4XW3r2zov4fdPmzHoi7zF9oWfFJOTMsfStFdHGcqvaPmk9Vd+B76osj50+aR196IvRd+W7bpb3Tp+0nqpPQvft2LOgmS25+t7sR7Ck9ts4RN/CM7PsWeeafcsB+gz6H0B6fy73FDZb+qKfw/NP0Yc+9OXtc32DfX4T9AEAxs8PPJVgtA==
+  </data>
+ </layer>
+ <layer name="produce" width="40" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztzcsNgmAQReFZTF3Sg/QgPUAP2AM2YRF0gQ+oQEFNnGRuCcZ/c77kbO7mmgEAAAAAAKCUnZtVUR8dPbfJs6ta1Fn90z7+6miITvp+eLaqjxpVCYf4bfR98eym7mpWJbTx2+n76dmmXuqtAAC/8QWYkSM/
   </data>
  </layer>
 </map>

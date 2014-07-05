@@ -26,13 +26,11 @@ function preload() {
     game.scale.pageAlignHorizontally = true;
     game.scale.refresh();
 
-    game.load.tilemap("map", "assets/daneeklu_tilesets/map.json", null, Phaser.Tilemap.TILED_JSON);
-    game.load.image("soil", "assets/daneeklu_tilesets/plowed_soil.png");
-    game.load.image("fences", "assets/daneeklu_tilesets/fence.png");
-    game.load.image("plants", "assets/daneeklu_tilesets/plants.png");
-    game.load.image("farming", "assets/daneeklu_tilesets/farming_fishing.png");
-    game.load.image("terrain", "assets/daneeklu_tilesets/terrain_atlas.png");
-    game.load.image("terrain_base", "assets/daneeklu_tilesets/base_out_atlas.png");
+    game.load.tilemap("map", "assets/maps/explore_farm_map.json", null, Phaser.Tilemap.TILED_JSON);
+
+    game.load.image("terrain", "assets/tilesets/lpc/terrain_atlas.png");
+    game.load.image("farming", "assets/tilesets/daneeklu/farming_fishing.png");
+    game.load.image("fences", "assets/tilesets/daneeklu/fence.png");
 
     // char
     game.load.spritesheet("player", "assets/chars/mage_f.png", 32, 36);
@@ -45,13 +43,13 @@ function create() {
     game.physics.startSystem(Phaser.Physics.P2JS);
 
     map = game.add.tilemap("map");
-    map.addTilesetImage("plowed_soil", "soil");
-    map.addTilesetImage("fence", "fences");
-    map.addTilesetImage("farming_fishing", "farming");
     map.addTilesetImage("terrain_atlas", "terrain");
-    map.addTilesetImage("terrain_base_atlas", "terrain_base");
+    map.addTilesetImage("farming_fishing", "farming");
+    map.addTilesetImage("fence", "fences");
 
-    layer = map.createLayer("farming_plots");
+    layer = map.createLayer("layout");
+    map.createLayer("produce");
+
     layer.resizeWorld();
 
     scenery = game.add.group();
@@ -66,9 +64,9 @@ function create() {
     // To find the tile indexses, I created a test_layer in Tiled and 
     // placed all the collidable tiles next to each other, then looked
     // at the .json file 
-    map.setCollisionBetween(19,36);
-    map.setCollisionBetween(245,251);
-    game.physics.p2.convertTilemap(map, layer);
+    //map.setCollisionBetween(19,36);
+    //map.setCollisionBetween(245,251);
+    //game.physics.p2.convertTilemap(map, layer);
 
 
     // player
@@ -78,7 +76,7 @@ function create() {
     lastKeyPressed = null;
     animRef = null;
 
-    player = game.add.sprite(400,100,"player");
+    player = game.add.sprite(448,380,"player");
     
     var animSpeed = 8;
     player.animations.add("walkUp", [0,1,2,1], animSpeed, true);

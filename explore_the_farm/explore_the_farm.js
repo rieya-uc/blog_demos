@@ -2,7 +2,7 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, "demo", {preload:preload, crea
 
 
 var map;
-var layer;
+var layer1, layer2;
 var scenery; // group
 var sceneryLayer;
 var player;
@@ -11,6 +11,7 @@ var animRef;
 var speed;
 var scenery;
 var fps;
+var jsonmap;
 
 function preload() {
 
@@ -34,6 +35,9 @@ function preload() {
 
     // char
     game.load.spritesheet("player", "assets/chars/mage_f.png", 32, 36);
+
+    // test read
+    game.load.text("jsonmap", "assets/maps/explore_farm_map.json");
 }
 
 function create() {
@@ -47,10 +51,10 @@ function create() {
     map.addTilesetImage("farming_fishing", "farming");
     map.addTilesetImage("fence", "fences");
 
-    layer = map.createLayer("layout");
-    map.createLayer("produce");
+    layer1 = map.createLayer("layout");
+    layer2 = map.createLayer("produce");
 
-    layer.resizeWorld();
+    layer1.resizeWorld();
 
     scenery = game.add.group();
 
@@ -64,9 +68,17 @@ function create() {
     // To find the tile indexses, I created a test_layer in Tiled and 
     // placed all the collidable tiles next to each other, then looked
     // at the .json file 
-    //map.setCollisionBetween(19,36);
-    //map.setCollisionBetween(245,251);
-    //game.physics.p2.convertTilemap(map, layer);
+    var jsonmap = JSON.parse(game.cache.getText("jsonmap"));
+    var collidables = jsonmap.layers[0].data.filter(function(element) { return element != 0; });
+
+    map.setCollision(collidables, true, layer1);
+    game.physics.p2.convertTilemap(map, layer1);
+
+    convertLayerToGroup(jsonmap.layers[1].data);
+    /*
+    map.setCollision(collidables, true, layer2);
+    game.physics.p2.convertTilemap(map, layer2);
+    */
 
 
     // player
@@ -92,6 +104,7 @@ function create() {
 
     fps = game.add.text(50,50, 0);
     fps.fixedToCamera = true;
+
 }
 
 
@@ -131,4 +144,15 @@ function update() {
 
 function render() {
     game.debug.body(player);
+}
+
+function convertLayerToGroup(layerData, tilesize, collidable) {
+    var collidable = collidable || false;
+
+    var i, x, y;
+    for (i = 0; i < layerData.length; i++) {
+        console.log(i + " " + layerData[i]);
+    }
+        
+
 }

@@ -29,7 +29,7 @@ function preload() {
 
     game.load.tilemap("map", "assets/maps/explore_farm_map.json", null, Phaser.Tilemap.TILED_JSON);
 
-    game.load.image("terrain", "assets/tilesets/lpc/terrain_atlas.png");
+    game.load.image("terrain_arghl", "assets/tilesets/lpc/terrain_atlas.png");
     game.load.image("farming", "assets/tilesets/daneeklu/farming_fishing.png");
     game.load.image("fences", "assets/tilesets/daneeklu/fence.png");
 
@@ -47,7 +47,7 @@ function create() {
     game.physics.startSystem(Phaser.Physics.P2JS);
 
     map = game.add.tilemap("map");
-    map.addTilesetImage("terrain_atlas", "terrain");
+    map.addTilesetImage("terrain_atlas", "terrain_arghl");
     map.addTilesetImage("farming_fishing", "farming");
     map.addTilesetImage("fence", "fences");
 
@@ -57,6 +57,7 @@ function create() {
     layer1.resizeWorld();
 
     scenery = game.add.group();
+    console.log(map.tilesets);
 
     // METHOD 1 of creating collision objects using Tiled
     // draw the collidable areas in an Object Layer using Polyline
@@ -74,7 +75,12 @@ function create() {
     map.setCollision(collidables, true, layer1);
     game.physics.p2.convertTilemap(map, layer1);
 
-    convertLayerToGroup(jsonmap.layers[1].data);
+    convertLayerToGroup(map, layer2, scenery);
+    //console.log(layer2.layer.data[0][0]);
+    //console.log(layer1.getTiles(0,0,60,60));
+    //convertLayerToGroup(jsonmap.layers[2].data);
+    //layer2.destroy();
+
     /*
     map.setCollision(collidables, true, layer2);
     game.physics.p2.convertTilemap(map, layer2);
@@ -115,22 +121,18 @@ function update() {
     if (cursorKeys.up.isDown) {
         animRef = player.animations.play("walkUp") || animRef;
         player.body.moveUp(speed);
-        //player.position.y -= speed;
     }
     else if (cursorKeys.down.isDown) {
         animRef = player.animations.play("walkDown") || animRef;
         player.body.moveDown(speed);
-        //player.position.y += speed;
     }
     else if (cursorKeys.left.isDown) {
         animRef = player.animations.play("walkLeft") || animRef;
         player.body.moveLeft(speed);
-        //player.position.x -= speed;
     }
     else if (cursorKeys.right.isDown) {
         animRef = player.animations.play("walkRight") || animRef;
         player.body.moveRight(speed);
-        //player.position.x += speed;
     }
     else if (animRef !== null ) {
         animRef.setFrame(1, true);
@@ -146,13 +148,37 @@ function render() {
     game.debug.body(player);
 }
 
-function convertLayerToGroup(layerData, tilesize, collidable) {
+function convertLayerToGroup(map, layer, group, collidable) {
     var collidable = collidable || false;
+    var layerData = layer.layer.data;
 
-    var i, x, y;
+    var tilesets = map.tilesets;
+    tilesets.sort(function(a, b) {
+        return a.firstgid - b.firstgid;
+    });
+
+    var sprite;
+    var i, j;
     for (i = 0; i < layerData.length; i++) {
-        console.log(i + " " + layerData[i]);
+        for (j = 0; j < layerData[i].length; j++) {
+            var tile = layerData[i][j];
+            
+            if (tile.index <= 0)
+                continue;
+            
+            var k;
+            for (k = 0; k < tilesets.length; k++) {
+                if (tile.index > tilesets[k].firstgid) {
+                    console.log(tilesets[k]);
+                    console.log(tile);
+                    group.create(tile.worldX + 32, tile.worldY, 
+                                 tilesets[k].image.name, tile.index - tilesets[k].firstgid, true);
+                    break;
+                }
+            }
+
+        }
     }
-        
+                              
 
 }

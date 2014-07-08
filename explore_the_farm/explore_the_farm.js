@@ -12,6 +12,7 @@ var speed;
 var scenery;
 var fps;
 var jsonmap;
+var layout;
 
 function preload() {
 
@@ -29,9 +30,9 @@ function preload() {
 
     game.load.tilemap("map", "assets/maps/explore_farm_map.json", null, Phaser.Tilemap.TILED_JSON);
 
-    game.load.image("terrain_arghl", "assets/tilesets/lpc/terrain_atlas.png");
-    game.load.image("farming", "assets/tilesets/daneeklu/farming_fishing.png");
-    game.load.image("fences", "assets/tilesets/daneeklu/fence.png");
+    game.load.spritesheet("terrain", "assets/tilesets/lpc/terrain_atlas.png", 32, 32);
+    game.load.spritesheet("farming", "assets/tilesets/daneeklu/farming_fishing.png", 32, 32);
+    game.load.spritesheet("fences", "assets/tilesets/daneeklu/fence.png", 32, 32);
 
     // char
     game.load.spritesheet("player", "assets/chars/mage_f.png", 32, 36);
@@ -47,7 +48,7 @@ function create() {
     game.physics.startSystem(Phaser.Physics.P2JS);
 
     map = game.add.tilemap("map");
-    map.addTilesetImage("terrain_atlas", "terrain_arghl");
+    map.addTilesetImage("terrain_atlas", "terrain");
     map.addTilesetImage("farming_fishing", "farming");
     map.addTilesetImage("fence", "fences");
 
@@ -56,8 +57,8 @@ function create() {
 
     layer1.resizeWorld();
 
+    layout = game.add.group();
     scenery = game.add.group();
-    console.log(map.tilesets);
 
     // METHOD 1 of creating collision objects using Tiled
     // draw the collidable areas in an Object Layer using Polyline
@@ -69,17 +70,17 @@ function create() {
     // To find the tile indexses, I created a test_layer in Tiled and 
     // placed all the collidable tiles next to each other, then looked
     // at the .json file 
-    var jsonmap = JSON.parse(game.cache.getText("jsonmap"));
-    var collidables = jsonmap.layers[0].data.filter(function(element) { return element != 0; });
+    //var jsonmap = JSON.parse(game.cache.getText("jsonmap"));
+    //var collidables = jsonmap.layers[0].data.filter(function(element) { return element != 0; });
 
-    map.setCollision(collidables, true, layer1);
-    game.physics.p2.convertTilemap(map, layer1);
+    //map.setCollision(collidables, true, layer1);
+    //game.physics.p2.convertTilemap(map, layer1);
 
     convertLayerToGroup(map, layer2, scenery);
-    //console.log(layer2.layer.data[0][0]);
-    //console.log(layer1.getTiles(0,0,60,60));
-    //convertLayerToGroup(jsonmap.layers[2].data);
-    //layer2.destroy();
+    layer2.destroy();
+    convertLayerToGroup(map, layer1, layout);
+    layer1.destroy();
+    map.destroy();
 
     /*
     map.setCollision(collidables, true, layer2);
@@ -167,12 +168,12 @@ function convertLayerToGroup(map, layer, group, collidable) {
                 continue;
             
             var k;
-            for (k = 0; k < tilesets.length; k++) {
-                if (tile.index > tilesets[k].firstgid) {
-                    console.log(tilesets[k]);
-                    console.log(tile);
+            // i don't have the brain power to make this better right now
+            for (k = 1; k < tilesets.length+1; k++) {
+                if ( k === tilesets.length || tilesets[k].firstgid > tile.index) {
+                    //console.log(tile);
                     group.create(tile.worldX + 32, tile.worldY, 
-                                 tilesets[k].image.name, tile.index - tilesets[k].firstgid, true);
+                                 tilesets[k-1].image.name, tile.index - tilesets[k-1].firstgid, true);
                     break;
                 }
             }

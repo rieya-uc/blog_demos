@@ -63,7 +63,7 @@ function create() {
     // METHOD 1 of creating collision objects using Tiled
     // draw the collidable areas in an Object Layer using Polyline
     // doesn't work with Tiled.Rectangle etc, only Polyline
-       // game.physics.p2.convertCollisionObjects(map, "fixed_collision");
+    // game.physics.p2.convertCollisionObjects(map, "fixed_collision");
 
 
     // METHOD 2 (see example P2 Physics -> Tilemap)
@@ -83,8 +83,8 @@ function create() {
     map.destroy();
 
     /*
-    map.setCollision(collidables, true, layer2);
-    game.physics.p2.convertTilemap(map, layer2);
+      map.setCollision(collidables, true, layer2);
+      game.physics.p2.convertTilemap(map, layer2);
     */
 
 
@@ -180,6 +180,6 @@ function convertLayerToGroup(map, layer, group, collidable) {
 
         }
     }
-                              
+    
 
 }

@@ -39,7 +39,6 @@ TilemapTowns.Game.prototype = {
 
     create: function () {
         this.stage.backgroundColor = '#2F8136';
-        this.physics.startSystem(Phaser.Physics.P2JS);
 
         var map = this.add.tilemap("map");
 
@@ -47,7 +46,7 @@ TilemapTowns.Game.prototype = {
         map.addTilesetImage("farming_fishing", "farming");
         map.addTilesetImage("fence", "fences");
 
-        var layer = map.createLayer("layout");
+        var layer = map.createLayer("background");
         layer.resizeWorld();
 
         this.background = this.add.group();
@@ -55,10 +54,38 @@ TilemapTowns.Game.prototype = {
         layer.destroy();
 
         this.scenery = this.add.group();
-        layer = map.createLayer("produce");
-        convertLayerToGroup(map, layer, this.scenery);
-        layer.destroy();
 
+        // Arcade physics
+        this.physics.startSystem(Phaser.Physics.ARCADE);
+        this.scenery.enableBody = true;
+        this.scenery.physicsBodyType = Phaser.Physics.ARCADE;
+        layer = map.createLayer("collidables");
+        convertLayerToGroup(map, layer, this.scenery);
+        this.scenery.setAll("body.immovable", true);
+
+        // P2 physics 
+        /*
+        this.physics.startSystem(Phaser.Physics.P2JS);
+        var sceneryCollisionGroup = this.physics.p2.createCollisionGroup();
+        var playerCollisionGroup = this.physics.p2.createCollisionGroup();
+
+        this.physics.p2.setImpactEvents(true);
+        this.scenery.enableBody = true;
+        this.scenery.physicsBodyType = Phaser.Physics.P2JS;
+
+        this.scenery.forEachExists(function(item) {
+            item.body.setRectangle(32,32);
+            item.body.setCollisionGroup(sceneryCollisionGroup);
+            e.body.collides([playerCollisionGroup, sceneryCollisionGroup]);
+        }, this, false, sceneryCollisionGroup, playerCollisionGroup);
+        */
+        // P2 physics end
+
+        layer.destroy();
+        layer = map.createLayer("background_overlay");
+        convertLayerToGroup(map, layer, this.add.group());
+        layer.destroy();
+        
         // we don't need this anymore, all the layers have been destroyed
         map.destroy();
 
@@ -74,9 +101,15 @@ TilemapTowns.Game.prototype = {
         this.player.animations.add("walkRight", [3,4,5,4], animSpeed, true);
         
         this.player.frame = 7;
-        this.physics.p2.enable(this.player);
-        this.player.body.fixedRotation = true;
+        this.physics.enable(this.player, Phaser.Physics.ARCADE);
+        this.player.body.allowRotation = false;
+        this.player.anchor.setTo(0.5, 1);
+        this.player.body.setSize(16,8);
 
+        //this.physics.p2.enable(this.player);
+        //this.player.body.fixedRotation = true;
+        //this.player.body.setCollisionGroup(playerCollisionGroup);
+        
         this.camera.follow(this.player);
 
         // on screen text
@@ -85,24 +118,32 @@ TilemapTowns.Game.prototype = {
     },
 
     update: function () {
+        this.physics.arcade.collide(this.player, this.scenery);
+ 
         var speed = 200;
-        this.player.body.setZeroVelocity();
-        
+        //this.player.body.setZeroVelocity();
+        this.player.body.velocity.x = 0;
+        this.player.body.velocity.y = 0;
+
         if (this.cursorKeys.up.isDown) {
             this.animRef = this.player.animations.play("walkUp") || this.animRef;
-            this.player.body.moveUp(speed);
+            this.player.body.velocity.y = -speed;
+            //this.player.body.moveUp(speed);
         }
         else if (this.cursorKeys.down.isDown) {
             this.animRef = this.player.animations.play("walkDown") || this.animRef;
-            this.player.body.moveDown(speed);
+            this.player.body.velocity.y = speed;
+            //this.player.body.moveDown(speed);
         }
         else if (this.cursorKeys.left.isDown) {
             this.animRef = this.player.animations.play("walkLeft") || this.animRef;
-            this.player.body.moveLeft(speed);
+            this.player.body.velocity.x = -speed;
+            //this.player.body.moveLeft(speed);
         }
         else if (this.cursorKeys.right.isDown) {
             this.animRef = this.player.animations.play("walkRight") || this.animRef;
-            this.player.body.moveRight(speed);
+            this.player.body.velocity.x = speed;
+            //this.player.body.moveRight(speed);
         }
         else if (this.animRef !== null ) {
             this.animRef.setFrame(1, true);
@@ -113,6 +154,10 @@ TilemapTowns.Game.prototype = {
         this.time.advancedTiming = true;
         this.fps.setText(this.time.fps);
 
+    },
+
+    render: function () {
+        this.game.debug.body(this.player);
     },
 
     quitGame: function (pointer) {
@@ -128,7 +173,7 @@ TilemapTowns.Game.prototype = {
 };
 
 
-function convertLayerToGroup(map, layer, group, collidable) {
+function convertLayerToGroup(map, layer, group) {
     var collidable = collidable || false;
     var layerData = layer.layer.data;
 
@@ -158,4 +203,5 @@ function convertLayerToGroup(map, layer, group, collidable) {
 
         }
     }
+        
 }

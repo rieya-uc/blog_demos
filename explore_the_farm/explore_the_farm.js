@@ -92,8 +92,7 @@ function create() {
 
     cursorKeys = game.input.keyboard.createCursorKeys();
     speed = 200;
-    lastKeyPressed = null;
-    animRef = null;
+    //animRef = null;
 
     player = game.add.sprite(448,380,"player");
     

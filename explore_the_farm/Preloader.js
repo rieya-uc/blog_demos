@@ -39,7 +39,7 @@ TilemapTowns.Preloader.prototype = {
         this.load.spritesheet("fences", "assets/tilesets/daneeklu/fence.png", 32, 32);
 
         this.load.spritesheet("player", "assets/chars/mage_f.png", 32, 36);
-
+        this.load.text("jsonmap", "assets/maps/explore_farm_map.json");
     },
 
     create: function () {

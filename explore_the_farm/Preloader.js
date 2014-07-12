@@ -37,6 +37,7 @@ TilemapTowns.Preloader.prototype = {
         this.load.spritesheet("terrain", "assets/tilesets/lpc/terrain_atlas.png", 32, 32);
         this.load.spritesheet("farming", "assets/tilesets/daneeklu/farming_fishing.png", 32, 32);
         this.load.spritesheet("fences", "assets/tilesets/daneeklu/fence.png", 32, 32);
+        this.load.spritesheet("magecity", "assets/tilesets/lpc/magecity_0.png", 32, 32);
 
         this.load.spritesheet("player", "assets/chars/mage_f.png", 32, 36);
         this.load.text("jsonmap", "assets/maps/explore_farm_map.json");

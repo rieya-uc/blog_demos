@@ -47,6 +47,7 @@ TilemapTowns.Game.prototype = {
         map.addTilesetImage("terrain_atlas", "terrain");
         map.addTilesetImage("farming_fishing", "farming");
         map.addTilesetImage("fence", "fences");
+        map.addTilesetImage("magecity_0", "magecity");
 
         var layer = map.createLayer("background");
         layer.resizeWorld();
@@ -57,7 +58,7 @@ TilemapTowns.Game.prototype = {
         this.scenery = map.createLayer("collidables");
         map.setCollision(colIndexes, true, 2, true);
         this.physics.p2.convertTilemap(map, this.scenery);
-        this.scenery.debug = true;
+        //this.scenery.debug = true;
         
         map.createLayer("background_overlay");       
 

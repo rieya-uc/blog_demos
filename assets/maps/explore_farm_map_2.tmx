@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="40" height="40" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="terrain_atlas" tilewidth="32" tileheight="32">
+  <image source="../tilesets/lpc/terrain_atlas.png" width="1024" height="1024"/>
+ </tileset>
+ <tileset firstgid="1025" name="fence" tilewidth="32" tileheight="32">
+  <image source="../tilesets/daneeklu/fence.png" width="96" height="192"/>
+ </tileset>
+ <tileset firstgid="1043" name="farming_fishing" tilewidth="32" tileheight="32">
+  <image source="../tilesets/daneeklu/farming_fishing.png" width="640" height="640"/>
+ </tileset>
+ <layer name="objects" width="40" height="40" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJzt0rlOVGEcxuFBUFFEEERRC+xkUbgAZC/ESiMXoIkLcgUQKLBTw1azCBMshDtgx04svAA3MFFBbwJ8JhkSCwubw2n+v+TJlzPFd97MTEFRJnOMQpq5SQuttPGdH/xklz1+8ZsllvlAUhW5+zgnuMPd/LvuOXuo5DxVXOAi1VziMle4VpDcvpPuL+YUD3nEY57Qm3s3tfnN9c4GrnODRpq4leC+0+4v4Qz9DOS3DDqHchu9+yl91FJHu8876KQrwd82V6n7z1LGCKOMMc4Ez+15wUu6uc07tnif4Pd2WLkN56hgjmz++5h3vuaNDQssHsGWfzVbaBdZajxfZdKWKaaZ4RWzKe3bsGuTt7R5bmfZlhVWWWOdjZT2bdu1wzfue37AR1s+8ZkvfGU7pX37dh2Q8V8bdjxLZ8Z/NUc27RFRFEVRFEVRFEVRFEVR9Fd/AOotO4E=
+  </data>
+ </layer>
+ <layer name="background" width="40" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztls0NwjAMRkPYoCOABFxhCOBYGAI4Fg6wBjAkc+AekKIocUr+bIGf9J2iqk+OXVcpQfhNJmOaZ4VhSI2HMZU6ZeM6ojYIc0McQ71QY6ZkbvPSQvbUEggd5EItgcDF7+WZ295vCdl5Qn33d8jDk0bVq+1MKzW3stD4Wc27X8P7Nla2Gj9z+fXz7uuFlJ6I9bN7cwU5BxJT8xg/V282jPxcdIX8DvC+o5WTDp/V8vsW7HvJwc+H+KUhfmlw9DN3Wqn9kYK5R0rtj1xwvF8T8UsD+9/+5Elm91+8AfD/dKY=
+  </data>
+ </layer>
+ <layer name="collidables" width="40" height="40">
+  <data encoding="base64" compression="zlib">
+   eJzNl8tO20AUhp3YBYFaFbGAV+DyCJSyDStKkRC8QJO+Aiza0oXDouENoE0WoQtYIzXcS9R3aNoiQW/vwKW/FY80PToz9tjjOEf6NXY84/ly5pwzY8fpfysXHKcSoZeF/Ph8zN2GqtAEtEs0CZUscL7D2FqC8b7E9pEZ32Q4k/h3D332Sb9t13F2oPeuepyYn2Pj+nH+3Uzo1yNwHUMnGr605ifg+1R0nBb0HVw/oMsYfHF8bYvvK9g60B3mug/m86LHyL42YU3Cl8RkX5vEhU/yRlhUzYqbX7KvhK9N4oLmjTA5f6qhPkvXskoaRs5XJnERZb6CiWPkfGniqyTWJD4M9EXaE6hoLNv0FWfB/jnPcMh8Fxq+rC3u+ubFR9dX5IjY6+na95qPY5Rzlj7rJZ9cu1SMFSk+uTPKIPKiqNCIlDOjmn5DJLda4Dlk6jytlTKv6vz0wELe0nd0wPPNja5d9OzG1egs+G7Ac+vGr11i7bnYy4IvianOGTbe7aV8h6jhWfGltaYmBnvN9xTzzTFzqmLQBt+A4h1X+P0a+gn9Cvs8R7tkMGce+VFD/y0yRhWDWfL9xu9/oL/QgdSnjusGGeMranQe/nuB/mWGj8vfYQv728MIvhk8fwLNhv3W0K7H5Av++xvU+I1Qb13z+yj/LeD5M2hR0S+q/n3AHPVQDdf8Pm2MqGLPFl/a/UP3DW2DL42JtdWdX/Lkk79Psoo/un+s4H7V67biegwaZ+JA8LV7mB+vg5rgdVtxPQVNa/ZdXX6cYo6zUOeu+T3le+X9zxi0y8WuqOlqS2CPNHU3rh6nyF/d2apfTHe+7xfjauA/m3YazQ==
+  </data>
+ </layer>
+ <layer name="background_overlay" width="40" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztl7sKwjAUQENvnATt6CrupYv4AU7i5F8Igj/j6hc4uTv7AL9AnfwKH4teiUJS+xLTpA33wJkK7SHNLSljBFFNVmC7IJ2T4b5zxvOyrleFNmesw21XJNPFtl5F+nTP0ByEUX7ZewNsG777dM6QK/vfRbb0bpzgNWM0Z8mEtgM0E/etj8OVs1odVGUWoGqDCajKNED1Q9yeXFroC0A1jaL69qAqMwVVnTQ8xpqSvqf3/klc8Jx1RW/oPeXMGkR6QkN9ZSfv+hH5GNEaEgXxz9nL9P9JqybccWHZeHDhGt2UsK+PazdGD9h2jPT5dpIUZvxbwjxPiKgxjA==
+  </data>
+ </layer>
+</map>

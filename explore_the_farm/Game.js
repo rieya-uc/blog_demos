@@ -49,18 +49,29 @@ TilemapTowns.Game.prototype = {
         map.addTilesetImage("fence", "fences");
         map.addTilesetImage("magecity_0", "magecity");
 
-        var layer = map.createLayer("background");
-        layer.resizeWorld();
-        
         var jsonmap = JSON.parse(this.cache.getText("jsonmap"));
-        var colIndexes = jsonmap.layers[2].data.filter(function(element) { return element != 0; });
+        var colIndexes = jsonmap.layers[0].data.filter(function(element) { 
+            return element != 0; });
 
-        this.scenery = map.createLayer("collidables");
+        var layer1 = map.createLayer("background");
+        layer1.resizeWorld();
+        map.setCollision(colIndexes, true, 1, true);
+        this.physics.p2.convertTilemap(map, layer1);
+        //layer1.debug = true;
+
+        var layer2 = map.createLayer("background_overlay");
         map.setCollision(colIndexes, true, 2, true);
-        this.physics.p2.convertTilemap(map, this.scenery);
-        //this.scenery.debug = true;
-        
-        map.createLayer("background_overlay");       
+        this.physics.p2.convertTilemap(map, layer2);
+        //layer2.debug = true;
+
+        var layer3 = map.createLayer("buildings");
+        map.setCollision(colIndexes, true, 3, true);
+        this.physics.p2.convertTilemap(map, layer3);
+        //layer3.debug = true;
+
+        var layer4 = map.createLayer("building_overlay");
+        map.setCollision(colIndexes, true, 4, true);
+        this.physics.p2.convertTilemap(map, layer4);
 
         // player controlled sprite
         this.player = this.add.sprite(448, 380, "player");
@@ -80,8 +91,6 @@ TilemapTowns.Game.prototype = {
 
         //this.player.anchor.setTo(0.5, 1);
         //this.player.body.setSize(16,8);
-
-        //this.player.body.setCollisionGroup(playerCollisionGroup);
         
         this.camera.follow(this.player);
 
@@ -91,7 +100,6 @@ TilemapTowns.Game.prototype = {
     },
 
     update: function () {
-        //this.physics.arcade.collide(this.player, this.scenery);
  
         var speed = 200;
         this.player.body.setZeroVelocity();

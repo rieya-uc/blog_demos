@@ -41,6 +41,9 @@ TilemapTowns.Boot.prototype = {
             this.scale.setScreenSize(true);
         }
 
+        this.scale.pageAlignHorizontally = true;
+        this.scale.refresh();
+
         //  By this point the preloader assets have loaded to the cache, we've set the game settings
         //  So now let's start the real preloader going
         this.state.start('Preloader');

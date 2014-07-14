@@ -28,19 +28,28 @@ TilemapTowns.Game = function (game) {
     this.cursorKeys;
     this.animRef;
 
-    this.background;
-    this.collidableScenery;
-    this.scenery;
+    this.layer1;
+    this.layer2;
+    this.layer3;
+    this.layer4;
+
+    this.leftBtn;
+    this.rightBtn;
+    this.upBtn;
+    this.downBtn;
+    this.currentButton = null;
 
     this.fps;
 };
+
+/* This is the Arcade Physics version */
 
 TilemapTowns.Game.prototype = {
 
     create: function () {
         this.stage.backgroundColor = '#2F8136';
-        this.physics.startSystem(Phaser.Physics.P2JS);
-        //this.time.deltaCap = 1/60;
+        this.physics.startSystem(Phaser.Physics.ARCADE);
+        this.time.deltaCap = 1/60;
 
         var map = this.add.tilemap("map");
 
@@ -49,34 +58,46 @@ TilemapTowns.Game.prototype = {
         map.addTilesetImage("fence", "fences");
         map.addTilesetImage("magecity_0", "magecity");
 
+        var layer = map.createLayer("background");
+        layer.resizeWorld();
+        
+        // In Tiled, put all the collidable tiles in one non-visible layer
+        // - layer[0] in this case. Extract the tile indexes from the .json file
+        // created by Tiled, and store in an array.
+        // We can then use that array in map.setCollision(...).
+        // In this instance, I've set the game to check for collisions on every layer,
+        // but next time it may be more cost-effective to put all the collidable 
+        // tiles on one or two layers, and keep the physics checking to only those layers.
         var jsonmap = JSON.parse(this.cache.getText("jsonmap"));
         var colIndexes = jsonmap.layers[0].data.filter(function(element) { 
-            return element != 0; });
+            return element != 0; 
+        });
 
-        var layer1 = map.createLayer("background");
-        layer1.resizeWorld();
+        this.layer1 = map.createLayer("background");
+        this.layer1.resizeWorld();
         map.setCollision(colIndexes, true, 1, true);
-        this.physics.p2.convertTilemap(map, layer1);
-        //layer1.debug = true;
+        this.physics.enable(this.layer1, Phaser.Physics.ARCADE);
+        //this.layer1.debug = true;
 
-        var layer2 = map.createLayer("background_overlay");
+        this.layer2 = map.createLayer("background_overlay");
         map.setCollision(colIndexes, true, 2, true);
-        this.physics.p2.convertTilemap(map, layer2);
-        //layer2.debug = true;
+        this.physics.enable(this.layer2, Phaser.Physics.ARCADE);
+        //this.layer2.debug = true;
 
-        var layer3 = map.createLayer("buildings");
+        this.layer3 = map.createLayer("buildings");
         map.setCollision(colIndexes, true, 3, true);
-        this.physics.p2.convertTilemap(map, layer3);
-        //layer3.debug = true;
+        this.physics.enable(this.layer3, Phaser.Physics.ARCADE);
+        //this.layer3.debug = true;
 
-        var layer4 = map.createLayer("building_overlay");
+        this.layer4 = map.createLayer("building_overlay");
         map.setCollision(colIndexes, true, 4, true);
-        this.physics.p2.convertTilemap(map, layer4);
+        this.physics.enable(this.layer4, Phaser.Physics.ARCADE);    
+        //this.layer4.debug = true;
 
         // player controlled sprite
         this.player = this.add.sprite(448, 380, "player");
         this.cursorKeys = this.input.keyboard.createCursorKeys();
-        
+
         this.animRef = null;
         var animSpeed = 8;
         this.player.animations.add("walkUp", [0,1,2,1], animSpeed, true);
@@ -85,50 +106,97 @@ TilemapTowns.Game.prototype = {
         this.player.animations.add("walkRight", [3,4,5,4], animSpeed, true);
         
         this.player.frame = 7;
-        
-        this.physics.p2.enable(this.player);
-        this.player.body.fixedRotation = true;
-
-        //this.player.anchor.setTo(0.5, 1);
-        //this.player.body.setSize(16,8);
+        this.physics.enable(this.player, Phaser.Physics.ARCADE);
+        this.player.body.allowRotation = false;
+        this.player.anchor.setTo(0.5, 1);
+        this.player.body.setSize(16,8);
         
         this.camera.follow(this.player);
 
-        // on screen text
-        this.fps = this.add.text(50, 50, 0);
+        // recalculate worlds bounds
+        this.physics.arcade.setBoundsToWorld();
+        this.player.body.collideWorldBounds = true;
+
+        // on-screen text
+        this.fps = this.add.text(50, 50, "0 fps");
         this.fps.fixedToCamera = true;
+
+        // on-screen controls - useful for tablets
+        this.leftBtn = this.add.button(30, this.game.height - 120 ,"left");
+        this.leftBtn.onInputDown.add(this.onButtonDown, this);
+        this.leftBtn.onInputUp.add(this.onButtonUp, this);
+        this.leftBtn.inputEnabled = true;
+        this.leftBtn.scale.setTo(0.7, 0.7);
+        this.leftBtn.fixedToCamera = true;
+
+        
+        this.rightBtn = this.add.button(100, this.game.height - 120 ,"right");
+        this.rightBtn.onInputDown.add(this.onButtonDown, this);
+        this.rightBtn.onInputUp.add(this.onButtonUp, this);
+        this.rightBtn.inputEnabled = true;
+        this.rightBtn.scale.setTo(0.7, 0.7);
+        this.rightBtn.fixedToCamera = true;
+
+        this.upBtn = this.add.button(65, this.game.height - 170 ,"up");
+        this.upBtn.onInputDown.add(this.onButtonDown, this);
+        this.upBtn.onInputUp.add(this.onButtonUp, this);
+        this.upBtn.inputEnabled = true;
+        this.upBtn.scale.setTo(0.7, 0.7);
+        this.upBtn.fixedToCamera = true;
+
+        this.downBtn = this.add.button(65, this.game.height - 70 ,"down");
+        this.downBtn.onInputDown.add(this.onButtonDown, this);
+        this.downBtn.onInputUp.add(this.onButtonUp, this);
+        this.downBtn.inputEnabled = true;
+        this.downBtn.scale.setTo(0.7, 0.7);
+        this.downBtn.fixedToCamera = true;
+        
+
     },
 
     update: function () {
- 
-        var speed = 200;
-        this.player.body.setZeroVelocity();
+        this.physics.arcade.collide(this.player, this.layer1);
+        this.physics.arcade.collide(this.player, this.layer2);
+        this.physics.arcade.collide(this.player, this.layer3);
+        this.physics.arcade.collide(this.player, this.layer4);
 
-        if (this.cursorKeys.up.isDown) {
+        var speed = 200;
+        this.player.body.velocity.x = 0;
+        this.player.body.velocity.y = 0;
+
+        if (this.cursorKeys.up.isDown || this.currentButton === this.upBtn) {
             this.animRef = this.player.animations.play("walkUp") || this.animRef;
-            this.player.body.moveUp(speed);
+            this.player.body.velocity.y = -speed;
         }
-        else if (this.cursorKeys.down.isDown) {
+        else if (this.cursorKeys.down.isDown || this.currentButton === this.downBtn) {
             this.animRef = this.player.animations.play("walkDown") || this.animRef;
-            this.player.body.moveDown(speed);
+            this.player.body.velocity.y = speed;
         }
-        else if (this.cursorKeys.left.isDown) {
+        else if (this.cursorKeys.left.isDown || this.currentButton === this.leftBtn) {
             this.animRef = this.player.animations.play("walkLeft") || this.animRef;
-            this.player.body.moveLeft(speed);
+            this.player.body.velocity.x = -speed;
         }
-        else if (this.cursorKeys.right.isDown) {
+        else if (this.cursorKeys.right.isDown || this.currentButton === this.rightBtn) {
             this.animRef = this.player.animations.play("walkRight") || this.animRef;
-            this.player.body.moveRight(speed);
+            this.player.body.velocity.x = speed;
         }
-        else if (this.animRef !== null ) {
+        else if (this.animRef !== null) {
             this.animRef.setFrame(1, true);
             this.animRef.stop();
             this.animRef = null;
         }
 
         this.time.advancedTiming = true;
-        this.fps.setText("p2 " + this.time.fps);
+        this.fps.setText("A " + this.time.fps + " fps");
 
+    },
+
+    onButtonDown: function (button) {
+        this.currentButton = button;
+    },
+
+    onButtonUp: function () {
+        this.currentButton = null;
     },
 
     quitGame: function (pointer) {
@@ -142,36 +210,3 @@ TilemapTowns.Game.prototype = {
     }
 
 };
-
-
-function convertLayerToGroup(map, layer, group) {
-    var layerData = layer.layer.data;
-
-    var tilesets = map.tilesets;
-    tilesets.sort(function(a, b) {
-        return a.firstgid - b.firstgid;
-    });
-
-    var sprite;
-    var i, j;
-    for (i = 0; i < layerData.length; i++) {
-        for (j = 0; j < layerData[i].length; j++) {
-            var tile = layerData[i][j];
-            
-            if (tile.index <= 0)
-                continue;
-            
-            var k;
-            // i don't have the brain power to make this better right now
-            for (k = 1; k < tilesets.length+1; k++) {
-                if ( k === tilesets.length || tilesets[k].firstgid > tile.index) {
-                    group.create(tile.worldX + 32, tile.worldY, 
-                                 tilesets[k-1].image.name, tile.index - tilesets[k-1].firstgid, true);
-                    break;
-                }
-            }
-
-        }
-    }
-        
-}

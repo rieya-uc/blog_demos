@@ -34,13 +34,18 @@ TilemapTowns.Preloader.prototype = {
 
         this.load.tilemap("map", "assets/maps/explore_farm_map.json", null, Phaser.Tilemap.TILED_JSON);
 
-        this.load.spritesheet("terrain", "assets/tilesets/lpc/terrain_atlas.png", 32, 32);
-        this.load.spritesheet("farming", "assets/tilesets/daneeklu/farming_fishing.png", 32, 32);
-        this.load.spritesheet("fences", "assets/tilesets/daneeklu/fence.png", 32, 32);
-        this.load.spritesheet("magecity", "assets/tilesets/lpc/magecity_0.png", 32, 32);
+        this.load.image("terrain", "assets/tilesets/lpc/terrain_atlas.png");
+        this.load.image("farming", "assets/tilesets/daneeklu/farming_fishing.png");
+        this.load.image("fences", "assets/tilesets/daneeklu/fence.png");
+        this.load.image("magecity", "assets/tilesets/lpc/magecity_0.png");
 
         this.load.spritesheet("player", "assets/chars/mage_f.png", 32, 36);
         this.load.text("jsonmap", "assets/maps/explore_farm_map.json");
+
+        this.load.image("left", "assets/ui/transparentDarkLeft.png");
+        this.load.image("right", "assets/ui/transparentDarkRight.png");
+        this.load.image("up", "assets/ui/transparentDarkUp.png");
+        this.load.image("down", "assets/ui/transparentDarkDown.png");
     },
 
     create: function () {

@@ -57,9 +57,6 @@ TilemapTowns.Game.prototype = {
         map.addTilesetImage("farming_fishing", "farming");
         map.addTilesetImage("fence", "fences");
         map.addTilesetImage("magecity_0", "magecity");
-
-        var layer = map.createLayer("background");
-        layer.resizeWorld();
         
         // In Tiled, put all the collidable tiles in one non-visible layer
         // - layer[0] in this case. Extract the tile indexes from the .json file

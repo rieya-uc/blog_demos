@@ -10,7 +10,7 @@
   <image source="../tilesets/daneeklu/farming_fishing.png" width="640" height="640"/>
  </tileset>
  <tileset firstgid="1443" name="magecity_0" tilewidth="32" tileheight="32">
-  <image source="../tilesets/lpc/magecity_0.png" width="256" height="1450"/>
+  <image source="../tilesets/hyptosis/magecity_0.png" width="256" height="1450"/>
  </tileset>
  <layer name="objects" width="100" height="55" visible="0">
   <data encoding="base64" compression="zlib">

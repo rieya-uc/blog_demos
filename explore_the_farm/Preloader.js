@@ -14,13 +14,13 @@ TilemapTowns.Preloader.prototype = {
 
 	//	These are the assets we loaded in Boot.js
 	//	A nice sparkly background and a loading progress bar
-	//this.background = this.add.sprite(0, 0, 'preloaderBackground');
-	//this.preloadBar = this.add.sprite(300, 400, 'preloaderBar');
+	this.background = this.add.sprite(230, 50, 'preloaderBackground');
+	this.preloadBar = this.add.sprite(200, 400, 'preloaderBar');
 
 	//	This sets the preloadBar sprite as a loader sprite.
 	//	What that does is automatically crop the sprite from 0 to full-width
 	//	as the files below are loaded in.
-	//this.load.setPreloadSprite(this.preloadBar);
+	this.load.setPreloadSprite(this.preloadBar);
 
 
 
@@ -37,7 +37,7 @@ TilemapTowns.Preloader.prototype = {
         this.load.image("terrain", "assets/tilesets/lpc/terrain_atlas.png");
         this.load.image("farming", "assets/tilesets/daneeklu/farming_fishing.png");
         this.load.image("fences", "assets/tilesets/daneeklu/fence.png");
-        this.load.image("magecity", "assets/tilesets/lpc/magecity_0.png");
+        this.load.image("magecity", "assets/tilesets/hyptosis/magecity_0.png");
 
         this.load.spritesheet("player", "assets/chars/mage_f.png", 32, 36);
         this.load.text("jsonmap", "assets/maps/explore_farm_map.json");
@@ -51,7 +51,7 @@ TilemapTowns.Preloader.prototype = {
     create: function () {
 
 	//	Once the load has finished we disable the crop because we're going to sit in the update loop for a short while as the music decodes
-	//this.preloadBar.cropEnabled = false;
+	this.preloadBar.cropEnabled = false;
 
     },
 

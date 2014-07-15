@@ -46,6 +46,8 @@ TilemapTowns.Preloader.prototype = {
         this.load.image("right", "assets/ui/transparentDarkRight.png");
         this.load.image("up", "assets/ui/transparentDarkUp.png");
         this.load.image("down", "assets/ui/transparentDarkDown.png");
+
+        this.load.atlasXML("buttons", path+"assets/ui/greenButtons.png", path+"assets/ui/greenButtons.xml");
     },
 
     create: function () {
@@ -74,7 +76,12 @@ TilemapTowns.Preloader.prototype = {
 	  }
         */
 
-        this.state.start("Game");
+        if (this.game.device.desktop) {
+            this.state.start("Game");
+        }
+        else {
+            this.state.start("MainMenu");
+        }
     }
 
 };

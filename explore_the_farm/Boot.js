@@ -34,14 +34,13 @@ TilemapTowns.Boot.prototype = {
             this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
             this.scale.minWidth = 480;
             this.scale.minHeight = 260;
-            this.scale.maxWidth = 1024;
-            this.scale.maxHeight = 768;
-            this.scale.forceLandscape = true;
+            this.scale.maxWidth = 800;
+            this.scale.maxHeight = 600;
+            this.scale.forceLandscape = false;
             this.scale.pageAlignHorizontally = true;
             this.scale.setScreenSize(true);
         }
 
-        this.scale.pageAlignHorizontally = true;
         this.scale.refresh();
 
         //  By this point the preloader assets have loaded to the cache, we've set the game settings

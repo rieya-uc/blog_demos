@@ -8,9 +8,17 @@ TilemapTowns.Boot.prototype = {
 
     preload: function () {
 
+        var path;
+        if (typeof window.path === "undefined") {
+            path = "";
+        }
+        else {
+            path = window.path;
+        }
+
         //  Here we load the assets required for our preloader (in this case a background and a loading bar)
-        this.load.image('preloaderBackground', 'assets/phaser-logo-small.png');
-        this.load.image('preloaderBar', 'assets/preload.png');
+        this.load.image('preloaderBackground', path+'assets/phaser-logo-small.png');
+        this.load.image('preloaderBar', path+'assets/preload.png');
 
     },
 

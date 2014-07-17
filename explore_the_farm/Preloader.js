@@ -32,20 +32,20 @@ TilemapTowns.Preloader.prototype = {
             path = window.path;
         }
 
-        this.load.tilemap("map", "assets/maps/explore_farm_map.json", null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap("map", path+"assets/maps/explore_farm_map.json", null, Phaser.Tilemap.TILED_JSON);
 
-        this.load.image("terrain", "assets/tilesets/lpc/terrain_atlas.png");
-        this.load.image("farming", "assets/tilesets/daneeklu/farming_fishing.png");
-        this.load.image("fences", "assets/tilesets/daneeklu/fence.png");
-        this.load.image("magecity", "assets/tilesets/hyptosis/magecity_0.png");
+        this.load.image("terrain", path+"assets/tilesets/lpc/terrain_atlas.png");
+        this.load.image("farming", path+"assets/tilesets/daneeklu/farming_fishing.png");
+        this.load.image("fences", path+"assets/tilesets/daneeklu/fence.png");
+        this.load.image("magecity", path+"assets/tilesets/hyptosis/magecity_0.png");
 
-        this.load.spritesheet("player", "assets/chars/mage_f.png", 32, 36);
-        this.load.text("jsonmap", "assets/maps/explore_farm_map.json");
+        this.load.spritesheet("player", path+"assets/chars/mage_f.png", 32, 36);
+        this.load.text("jsonmap", path+"assets/maps/explore_farm_map.json");
 
-        this.load.image("left", "assets/ui/transparentDarkLeft.png");
-        this.load.image("right", "assets/ui/transparentDarkRight.png");
-        this.load.image("up", "assets/ui/transparentDarkUp.png");
-        this.load.image("down", "assets/ui/transparentDarkDown.png");
+        this.load.image("left", path+"assets/ui/transparentDarkLeft.png");
+        this.load.image("right", path+"assets/ui/transparentDarkRight.png");
+        this.load.image("up", path+"assets/ui/transparentDarkUp.png");
+        this.load.image("down", path+"assets/ui/transparentDarkDown.png");
 
         this.load.atlasXML("buttons", path+"assets/ui/greenButtons.png", path+"assets/ui/greenButtons.xml");
     },

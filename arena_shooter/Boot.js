@@ -15,6 +15,7 @@ ArenaShooter.Boot.prototype = {
     },
 
     create: function () {
+        var myScript = document.getElementById("script");
 
         //  Unless you specifically know your game needs to support multi-touch I would recommend setting this to 1
         this.input.maxPointers = 1;
@@ -25,7 +26,10 @@ ArenaShooter.Boot.prototype = {
         if (this.game.device.desktop)
         {
             //  If you have any desktop specific settings, they can go in here
-            this.scale.pageAlignHorizontally = true;
+            if (myScript.parentNode.className === "js_centred")
+                this.scale.pageAlignHorizontally = true;
+            else
+                this.scale.pageAlignHorizontally = false;
         }
         else
         {
@@ -40,6 +44,8 @@ ArenaShooter.Boot.prototype = {
             this.scale.pageAlignHorizontally = true;
             this.scale.setScreenSize(true);
         }
+
+        this.scale.refresh();
 
         //  By this point the preloader assets have loaded to the cache, we've set the game settings
         //  So now let's start the real preloader going

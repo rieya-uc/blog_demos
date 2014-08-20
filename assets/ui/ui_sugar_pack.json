@@ -1,0 +1,66 @@
+{"frames": [
+
+{
+	"filename": "green_button.png",
+	"frame": {"x":116,"y":2,"w":136,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":136,"h":48},
+	"sourceSize": {"w":136,"h":48},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "green_grip1.png",
+	"frame": {"x":26,"y":2,"w":22,"h":4},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":4},
+	"sourceSize": {"w":22,"h":4},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "green_grip2.png",
+	"frame": {"x":50,"y":2,"w":22,"h":15},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":15},
+	"sourceSize": {"w":22,"h":15},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "green_grip3.png",
+	"frame": {"x":2,"y":2,"w":22,"h":4},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":22,"h":4},
+	"sourceSize": {"w":22,"h":4},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "green_panel.png",
+	"frame": {"x":2,"y":436,"w":240,"h":480},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":240,"h":480},
+	"sourceSize": {"w":240,"h":480},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "green_track.png",
+	"frame": {"x":74,"y":2,"w":40,"h":432},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":40,"h":432},
+	"sourceSize": {"w":40,"h":432},
+	"pivot": {"x":0.5,"y":0.5}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "ui_sugar_pack.png",
+	"format": "RGBA8888",
+	"size": {"w":254,"h":918},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:b7bfcb54bedc1825a8505cfce9ff0bf1:6a359655d8ef84ae84aa2aa2fff60af7:c01e1fb009b4f2de6bfdb043d4645f7a$"
+}
+}

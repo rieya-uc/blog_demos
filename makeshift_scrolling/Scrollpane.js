@@ -1,23 +1,12 @@
 OneBrokenPixel = {};
+
 OneBrokenPixel.UI = function (game) {
     Phaser.Group.call(this, game);
 
-    var delta = 0;
+    // prevent the canvas from passing events to the web page
+    // (right now, this is only important for scrollpanes)
+    game.input.mouse.capture = true;
 
-    this.mouseWheelDelta=0;
-
-    game.input.mouse.mouseWheelCallback = function (event) {
-        this.mouseWheelDelta = game.input.mouse.wheelDelta;
-        setDelta(game.input.mouse.wheelDelta);
-    };
-
-     var setDelta = function(d) {
-        delta = d;
-    };
-    this.getDelta = function() {
-        return delta;
-    };
-    
     return this;
 };
 
@@ -30,7 +19,7 @@ OneBrokenPixel.UI.Pane = function (game, x, y, atlasKey, colour, borders) {
     this.x = x || 0;
     this.y = y || 0;
 
-    this.background = this.create(0,0, atlasKey, colour+"_panel.png");
+    this.background = this.create(0,0, atlasKey, colour+"_background.png");
 
     this.borders = {top: 8, bottom: 8, left: 8, right: 8};
 
@@ -52,6 +41,7 @@ OneBrokenPixel.UI.Pane = function (game, x, y, atlasKey, colour, borders) {
 
     this.atlasKey = atlasKey;
 
+    // it might be better to make this optional, masks can be expensive
     var mask = new PIXI.Graphics();
     mask.beginFill();
     mask.drawRect(this.x+this.borders.top, this.y+this.borders.left, this.activeWidth, this.activeHeight);
@@ -103,13 +93,13 @@ OneBrokenPixel.UI.Pane.prototype.getActiveWidth = function () {
 };
 
 /*
-OneBrokenPixel.UI.Pane.getContentX = function () {
-    return this.content.x;
-};
+  OneBrokenPixel.UI.Pane.getContentX = function () {
+  return this.content.x;
+  };
 
-OneBrokenPixel.UI.Pane.getContentY = function () {
-    return this.content.y;
-};
+  OneBrokenPixel.UI.Pane.getContentY = function () {
+  return this.content.y;
+  };
 */
 
 OneBrokenPixel.UI.Scrollpane = function (game, x, y, atlasKey, colour, borders) {
@@ -133,7 +123,7 @@ OneBrokenPixel.UI.Scrollpane = function (game, x, y, atlasKey, colour, borders) 
     // arbitrary, whatever feels right - amount to move per scroll wheel movement
     this._moveUnit = 50;  
 
-    this.contentHeight = 20;
+    this.contentHeight = 30;
 
     this.grip = new Phaser.Image(this.game, 0, 0, atlasKey, colour+"_grip1.png");
     var gripmid = new Phaser.Image(this.game, 0, this.grip.height, atlasKey, colour+"_grip2.png");
@@ -159,9 +149,28 @@ OneBrokenPixel.UI.Scrollpane = function (game, x, y, atlasKey, colour, borders) 
 
     this._setGripHeight(this._maxGripHeight);    
 
-    this.background.inputEnabled = true;
-    
-    //this.background.addEventListener("mousewheel", this.mouseWheel.bind(this), true);
+    // enable the mouse's scrollwheel
+    if (game.device.desktop) { // (does this include laptops?)
+        console.log("desktop");
+        
+        var paneArea = new Phaser.Rectangle(this.x, this.y, 
+                                            this.background.width, 
+                                            this.background.height);
+        var that = this;
+        
+        game.input.mouse.mouseWheelCallback = function (event) {
+            if (paneArea.contains(game.input.x, game.input.y)) {
+                if (game.input.mouse.wheelDelta === 1) {
+                    that._scrollWheelUp();
+                }
+                else if (game.input.mouse.wheelDelta === -1) {
+                    that._scrollWheelDown();
+                }
+            }
+        
+        };
+
+    }
 
     /*
       panelMask = game.add.image(0,0,"panelMask");
@@ -171,8 +180,6 @@ OneBrokenPixel.UI.Scrollpane = function (game, x, y, atlasKey, colour, borders) 
       panelMask.z = 1;
     */
 
-
-    
     return this;
 };
 
@@ -180,10 +187,6 @@ OneBrokenPixel.UI.Scrollpane = function (game, x, y, atlasKey, colour, borders) 
 
 OneBrokenPixel.UI.Scrollpane.prototype = Object.create(OneBrokenPixel.UI.Pane.prototype);
 OneBrokenPixel.UI.Scrollpane.prototype.constructor = OneBrokenPixel.UI.Scrollpane;
-
-OneBrokenPixel.UI.Scrollpane.prototype.mouseWheelMove = function() {
-    console.log("blah");
-};
 
 OneBrokenPixel.UI.Scrollpane.prototype.addItem =  function (x, y, item) {
 
@@ -207,6 +210,8 @@ OneBrokenPixel.UI.Scrollpane.prototype.addItem =  function (x, y, item) {
     var windowScrollAreaSize = this.contentHeight - this.activeHeight;
     var trackScrollAreaSize = this.track.activeHeight - this._getGripHeight();
     this._dragRatio = windowScrollAreaSize / trackScrollAreaSize;
+
+    //console.log(item.events);
 };
 
 OneBrokenPixel.UI.Scrollpane.prototype._getGripHeight = function () {
@@ -243,21 +248,43 @@ OneBrokenPixel.UI.Scrollpane.prototype._setGripHeight = function (height) {
 };
 
 OneBrokenPixel.UI.Scrollpane.prototype.update = function () {
-    
-    if (this.background.input.pointerOver(this.background.input.activePointer) &&
-        this.game.input.mouse.wheelDelta !== 0) {//||  this.game.input.mouse.wheelDelta !== undefined)) {
-        if (this.game.input.mouse.wheelDelta === -1) {
-            this.content.y -= this._moveUnit;
-        }
-        else if (this.game.input.mouse.wheelDelta === 1) {
-            this.content.y += this._moveUnit;
-        }
-        this.game.input.mouse.wheelDelta = 0;
-    }
-    
+    // at max grip height, 
     if (this.grip.input.isDragged && this._getGripHeight() < this._maxGripHeight) {
         // move content group upwards by drag ratio
         this.content.y = this.borders.top - (this.grip.y-this.track.activeY) * this._dragRatio;
     }
 };
 
+OneBrokenPixel.UI.Scrollpane.prototype._scrollWheelUp = function () {
+    var limit = this.borders.top; // how far upwards the content window is allowed to move
+
+    if (this.content.y < limit) {
+        var diff = limit - this.content.y;
+        if (diff < this._moveUnit) {
+            this.content.y = limit;
+        }
+        else {
+            this.content.y += this._moveUnit;
+        }
+        this.grip.y = Math.floor(((this.borders.top - this.content.y) / this._dragRatio) 
+                                 + this.track.activeY);
+    }
+};
+
+OneBrokenPixel.UI.Scrollpane.prototype._scrollWheelDown = function () {
+
+    var cb = this.content.y + this.contentHeight;  // position of the bottom of the content window
+    var limit = this.getHeight() - this.borders.bottom;  // how far upwards cb is allowed to move
+
+    if (cb > limit) {
+        var diff = cb - limit;
+        if (diff < this._moveUnit) {
+            this.content.y = limit - this.contentHeight;
+        }
+        else {
+            this.content.y -= this._moveUnit;
+        }
+        this.grip.y = Math.floor(((this.borders.top - this.content.y) / this._dragRatio) 
+                                 + this.track.activeY);
+    }
+};

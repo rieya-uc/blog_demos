@@ -9,7 +9,16 @@ function preload() {
     //game.load.image("btn", "assets/ui/my_button.png");
 
     //scrollpane assets
-    game.load.atlasJSONArray("ui_pack", "assets/ui/ui_sugar_pack.png", "assets/ui/ui_sugar_pack.json");
+    game.load.atlasJSONArray("ui_pack", "assets/ui/30x60_sugar_ui_pack.png", "assets/ui/30x60_sugar_ui_pack.json");
+
+
+    /*
+    game.canvas.addEventListener('mousewheel',function(event){
+        mouseController.wheel(event);
+        return false;
+    }, false);
+    */
+
 }
 
 function create() {
@@ -18,10 +27,13 @@ function create() {
 
 
     var scrollpane = new OneBrokenPixel.UI.Scrollpane(game, 100, 40, "ui_pack", "green");
-    for (var i = 0; i < 300; i++) {
-        var item = game.add.image(0, 0, "ui_pack", "green_button.png");
-        //item.width *= 0.60;
-        //item.height *= 0.85;
+    for (var i = 0; i < 20; i++) {
+        var colours = ["green", "red", "yellow", "orange"];
+        var c = game.rnd.pick(colours);
+        
+        var item = new Phaser.Button(game, 0, 0, "ui_pack", null, null, 
+                                     c+"_button.png", c+"_button.png", 
+                                     c+"_button_pressed.png", c+"_button.png");
         scrollpane.addItem(20, 20+i*(item.height+10), item);
     }
 }

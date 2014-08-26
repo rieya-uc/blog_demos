@@ -1,0 +1,309 @@
+{"frames": [
+
+{
+	"filename": "green_background.png",
+	"frame": {"x":244,"y":636,"w":240,"h":480},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":240,"h":480},
+	"sourceSize": {"w":240,"h":480},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "green_button.png",
+	"frame": {"x":262,"y":152,"w":128,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":48},
+	"sourceSize": {"w":128,"h":48},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "green_button_down.png",
+	"frame": {"x":132,"y":202,"w":128,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":48},
+	"sourceSize": {"w":128,"h":48},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "green_button_on.png",
+	"frame": {"x":2,"y":152,"w":128,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":48},
+	"sourceSize": {"w":128,"h":48},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "green_grip1.png",
+	"frame": {"x":184,"y":2,"w":24,"h":8},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":24,"h":8},
+	"sourceSize": {"w":24,"h":8},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "green_grip2.png",
+	"frame": {"x":236,"y":2,"w":24,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":24,"h":16},
+	"sourceSize": {"w":24,"h":16},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "green_grip3.png",
+	"frame": {"x":2,"y":2,"w":24,"h":8},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":24,"h":8},
+	"sourceSize": {"w":24,"h":8},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "green_track.png",
+	"frame": {"x":304,"y":202,"w":40,"h":432},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":40,"h":432},
+	"sourceSize": {"w":40,"h":432},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "orange_background.png",
+	"frame": {"x":2,"y":1118,"w":240,"h":480},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":240,"h":480},
+	"sourceSize": {"w":240,"h":480},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "orange_button.png",
+	"frame": {"x":262,"y":102,"w":128,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":48},
+	"sourceSize": {"w":128,"h":48},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "orange_button_down.png",
+	"frame": {"x":132,"y":152,"w":128,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":48},
+	"sourceSize": {"w":128,"h":48},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "orange_button_on.png",
+	"frame": {"x":2,"y":202,"w":128,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":48},
+	"sourceSize": {"w":128,"h":48},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "orange_grip1.png",
+	"frame": {"x":80,"y":2,"w":24,"h":8},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":24,"h":8},
+	"sourceSize": {"w":24,"h":8},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "orange_grip2.png",
+	"frame": {"x":210,"y":2,"w":24,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":24,"h":16},
+	"sourceSize": {"w":24,"h":16},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "orange_grip3.png",
+	"frame": {"x":158,"y":2,"w":24,"h":8},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":24,"h":8},
+	"sourceSize": {"w":24,"h":8},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "orange_track.png",
+	"frame": {"x":388,"y":202,"w":40,"h":432},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":40,"h":432},
+	"sourceSize": {"w":40,"h":432},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "purple_background.png",
+	"frame": {"x":2,"y":636,"w":240,"h":480},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":240,"h":480},
+	"sourceSize": {"w":240,"h":480},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "purple_track.png",
+	"frame": {"x":430,"y":202,"w":40,"h":432},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":40,"h":432},
+	"sourceSize": {"w":40,"h":432},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "red_background.png",
+	"frame": {"x":244,"y":1118,"w":240,"h":480},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":240,"h":480},
+	"sourceSize": {"w":240,"h":480},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "red_button.png",
+	"frame": {"x":314,"y":2,"w":128,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":48},
+	"sourceSize": {"w":128,"h":48},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "red_button_down.png",
+	"frame": {"x":262,"y":52,"w":128,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":48},
+	"sourceSize": {"w":128,"h":48},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "red_button_on.png",
+	"frame": {"x":2,"y":52,"w":128,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":48},
+	"sourceSize": {"w":128,"h":48},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "red_grip1.png",
+	"frame": {"x":28,"y":2,"w":24,"h":8},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":24,"h":8},
+	"sourceSize": {"w":24,"h":8},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "red_grip2.png",
+	"frame": {"x":288,"y":2,"w":24,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":24,"h":16},
+	"sourceSize": {"w":24,"h":16},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "red_grip3.png",
+	"frame": {"x":132,"y":2,"w":24,"h":8},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":24,"h":8},
+	"sourceSize": {"w":24,"h":8},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "red_track.png",
+	"frame": {"x":262,"y":202,"w":40,"h":432},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":40,"h":432},
+	"sourceSize": {"w":40,"h":432},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "yellow_button.png",
+	"frame": {"x":2,"y":102,"w":128,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":48},
+	"sourceSize": {"w":128,"h":48},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "yellow_button_down.png",
+	"frame": {"x":132,"y":52,"w":128,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":48},
+	"sourceSize": {"w":128,"h":48},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "yellow_button_on.png",
+	"frame": {"x":132,"y":102,"w":128,"h":48},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":48},
+	"sourceSize": {"w":128,"h":48},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "yellow_grip1.png",
+	"frame": {"x":54,"y":2,"w":24,"h":8},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":24,"h":8},
+	"sourceSize": {"w":24,"h":8},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "yellow_grip2.png",
+	"frame": {"x":262,"y":2,"w":24,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":24,"h":16},
+	"sourceSize": {"w":24,"h":16},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "yellow_grip3.png",
+	"frame": {"x":106,"y":2,"w":24,"h":8},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":24,"h":8},
+	"sourceSize": {"w":24,"h":8},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
+	"filename": "yellow_track.png",
+	"frame": {"x":346,"y":202,"w":40,"h":432},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":40,"h":432},
+	"sourceSize": {"w":40,"h":432},
+	"pivot": {"x":0.5,"y":0.5}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "30x60_sugar_ui_pack.png",
+	"format": "RGBA8888",
+	"size": {"w":486,"h":1600},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:ced9d338922322e972f603dd29c8f1a6:a5913377a71bda667c10fab17a66f8f5:f82d5a29ad617d5ca9698300c4bda00f$"
+}
+}

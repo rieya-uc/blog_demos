@@ -1,4 +1,4 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, "game", {preload:preload, create:create, update:update});
+var game = new Phaser.Game(800, 600, Phaser.AUTO, "demo", {preload:preload, create:create, update:update});
 
 //  The Google WebFont Loader will look for this object, so create it before loading the script.
 WebFontConfig = {
@@ -15,14 +15,31 @@ var onscreenText = null;
 function preload() {
 
     // centre the canvas
-    game.scale.pageAlignHorizontally = true;
+
+    var myScript = document.getElementById("demo");
+
+    if (myScript.className === "js_centred")
+        this.scale.pageAlignHorizontally = true;
+    else
+        this.scale.pageAlignHorizontally = false;
+
     game.scale.refresh();
 
+    // google webfonts
     game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 
+
+    var path;
+    if (typeof window.path === "undefined") {
+        path = "";
+    }
+    else {
+        path = window.path;
+    }
+
     //scrollpane assets
-    game.load.atlasJSONArray("ui_pack", "assets/ui/30x60_sugar_ui_pack.png", "assets/ui/30x60_sugar_ui_pack.json");
-    game.load.spritesheet("square_people", "assets/chars/little_square_people.png", 32, 64, -1, 2, 2);
+    game.load.atlasJSONArray("ui_pack", path + "assets/ui/30x60_sugar_ui_pack.png", "assets/ui/30x60_sugar_ui_pack.json");
+    game.load.spritesheet("square_people", path + "assets/chars/little_square_people.png", 32, 64, -1, 2, 2);
 
 }
 
